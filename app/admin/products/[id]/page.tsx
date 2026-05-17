@@ -19,6 +19,7 @@ const EMPTY: ProductForm = {
   in_stock: true, is_featured: false, is_new: false,
   badge_text: '', badge_color: '#c8102e',
   rating: 0, review_count: 0, tags: [], sort_order: 0,
+  stock_quantity: 0,
 }
 
 function slugify(str: string) {
