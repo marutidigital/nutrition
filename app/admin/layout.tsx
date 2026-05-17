@@ -29,21 +29,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     const check = async () => {
       const { data: { user } } = await supabase.auth.getUser()
       if (!user) { router.push('/auth/login'); return }
-      
-      let { data } = await supabase.from('profiles').select('*').eq('id', user.id).single()
-      
-      // DEVELOPER BYPASS: If you are logged in but not an admin, we automatically make you an admin!
-      if (data && data.role !== 'admin') {
-        const { error } = await supabase.from('profiles').update({ role: 'admin' }).eq('id', user.id)
-        if (!error) {
-          data.role = 'admin'
-        }
-      }
-
-      if (!data || data.role !== 'admin') {
-        router.push('/')
-        return
-      }
+      // No role check - any logged in user can access admin
+      const { data } = await supabase.from('profiles').select('*').eq('id', user.id).single()
       setProfile(data as Profile)
       setChecking(false)
     }
@@ -55,7 +42,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       <div className="min-h-screen flex items-center justify-center bg-dark">
         <div className="text-center">
           <div className="w-10 h-10 border-2 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-          <p className="text-gray-400 text-sm">Verifying admin access...</p>
+          <p className="text-gray-400 text-sm">Loading admin panel...</p>
         </div>
       </div>
     )
