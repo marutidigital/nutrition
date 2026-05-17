@@ -2,6 +2,7 @@ import { Metadata } from 'next'
 import Link from 'next/link'
 import { createServerSupabaseClient } from '@/lib/supabase-server'
 import { ProductCard } from '@/components/ProductCard'
+import { ShopControls } from '@/components/ShopControls'
 import type { Product } from '@/lib/types'
 
 export const metadata: Metadata = {
@@ -11,7 +12,6 @@ export const metadata: Metadata = {
 
 export const revalidate = 60
 
-// Exact category values matching the products.category column
 const SHOP_CATEGORIES = [
   { name: 'All Products',         slug: '' },
   { name: 'Proteins',             slug: 'Proteins' },
@@ -42,7 +42,6 @@ interface PageProps {
     new?: string
     sort?: string
     page?: string
-    brand?: string
     min_price?: string
     max_price?: string
   }
@@ -60,11 +59,9 @@ export default async function ProductsPage({ searchParams }: PageProps) {
   if (searchParams.category) query = query.ilike('category', searchParams.category)
   if (searchParams.q) query = query.ilike('name', `%${searchParams.q}%`)
   if (searchParams.new === 'true') query = query.eq('is_new', true)
-  if (searchParams.brand) query = query.ilike('brand', `%${searchParams.brand}%`)
   if (searchParams.min_price) query = query.gte('price', Number(searchParams.min_price))
   if (searchParams.max_price) query = query.lte('price', Number(searchParams.max_price))
 
-  // Apply sorting
   const sort = searchParams.sort ?? 'featured'
   if (sort === 'price_asc') query = query.order('price', { ascending: true })
   else if (sort === 'price_desc') query = query.order('price', { ascending: false })
@@ -87,14 +84,22 @@ export default async function ProductsPage({ searchParams }: PageProps) {
   const activeCategory = searchParams.category ?? ''
   const searchQuery = searchParams.q ?? ''
 
-  const activeCategoryLabel = (SHOP_CATEGORIES.find(c => c.slug === activeCategory)?.name ?? activeCategory) || 'All Products'
+  const activeCategoryLabel =
+    (SHOP_CATEGORIES.find((c) => c.slug === activeCategory)?.name ?? activeCategory) || 'All Products'
+
+  // Build plain searchParams object for passing to client component
+  const spObj: Record<string, string> = {}
+  if (searchParams.category) spObj.category = searchParams.category
+  if (searchParams.q) spObj.q = searchParams.q
+  if (searchParams.page) spObj.page = searchParams.page
+  if (searchParams.min_price) spObj.min_price = searchParams.min_price
+  if (searchParams.max_price) spObj.max_price = searchParams.max_price
 
   return (
     <div className="bg-white min-h-screen">
       {/* Page header */}
       <div className="bg-gray-50 border-b border-gray-200">
         <div className="max-w-[1400px] mx-auto px-4 py-4">
-          {/* Breadcrumb */}
           <div className="text-xs text-gray-400 mb-2">
             <Link href="/" className="hover:text-[#c8102e]">Home</Link>
             {' '}›{' '}
@@ -112,7 +117,6 @@ export default async function ProductsPage({ searchParams }: PageProps) {
 
           {/* ── Sidebar ── */}
           <aside className="hidden lg:block w-56 flex-shrink-0">
-            {/* Categories */}
             <div className="mb-6">
               <div className="text-xs font-black tracking-widest text-dark uppercase mb-3 pb-2 border-b-2 border-[#c8102e]">
                 CATEGORIES
@@ -135,30 +139,33 @@ export default async function ProductsPage({ searchParams }: PageProps) {
             </div>
 
             {/* Price filter */}
-            <div className="mb-6">
+            <div>
               <div className="text-xs font-black tracking-widest text-dark uppercase mb-3 pb-2 border-b-2 border-[#c8102e]">
                 PRICE
               </div>
-              <div className="space-y-1">
+              <div className="space-y-0.5">
                 {[
-                  { label: 'Under CHF 20', min: '', max: '20' },
-                  { label: 'CHF 20 – 40',  min: '20', max: '40' },
-                  { label: 'CHF 40 – 70',  min: '40', max: '70' },
-                  { label: 'CHF 70 – 100', min: '70', max: '100' },
-                  { label: 'Over CHF 100', min: '100', max: '' },
+                  { label: 'Under CHF 20',  min: '',    max: '20'  },
+                  { label: 'CHF 20 – 40',   min: '20',  max: '40'  },
+                  { label: 'CHF 40 – 70',   min: '40',  max: '70'  },
+                  { label: 'CHF 70 – 100',  min: '70',  max: '100' },
+                  { label: 'Over CHF 100',  min: '100', max: ''    },
                 ].map((r) => {
                   const params = new URLSearchParams()
                   if (activeCategory) params.set('category', activeCategory)
                   if (r.min) params.set('min_price', r.min)
                   if (r.max) params.set('max_price', r.max)
                   const isActive =
-                    searchParams.min_price === r.min && searchParams.max_price === r.max
+                    (searchParams.min_price ?? '') === r.min &&
+                    (searchParams.max_price ?? '') === r.max
                   return (
                     <Link
                       key={r.label}
                       href={`/products?${params}`}
                       className={`block px-3 py-2 text-sm transition-colors rounded-sm ${
-                        isActive ? 'bg-[#c8102e] text-white font-bold' : 'text-gray-600 hover:text-[#c8102e] hover:bg-red-50'
+                        isActive
+                          ? 'bg-[#c8102e] text-white font-bold'
+                          : 'text-gray-600 hover:text-[#c8102e] hover:bg-red-50'
                       }`}
                     >
                       {r.label}
@@ -171,50 +178,14 @@ export default async function ProductsPage({ searchParams }: PageProps) {
 
           {/* ── Main grid ── */}
           <div className="flex-1 min-w-0">
-            {/* Sort bar */}
-            <div className="flex items-center justify-between mb-5 flex-wrap gap-3">
-              {/* Mobile categories dropdown */}
-              <div className="lg:hidden">
-                <select
-                  onChange={(e) => {
-                    if (typeof window !== 'undefined') {
-                      window.location.href = e.target.value
-                        ? `/products?category=${encodeURIComponent(e.target.value)}`
-                        : '/products'
-                    }
-                  }}
-                  value={activeCategory}
-                  className="border border-gray-300 px-3 py-2 text-sm focus:outline-none bg-white rounded-sm"
-                >
-                  {SHOP_CATEGORIES.map((c) => (
-                    <option key={c.slug} value={c.slug}>{c.name}</option>
-                  ))}
-                </select>
-              </div>
+            {/* Sort bar — client component to handle onChange */}
+            <ShopControls
+              sort={sort}
+              activeCategory={activeCategory}
+              categories={SHOP_CATEGORIES}
+              searchParams={spObj}
+            />
 
-              {/* Sort */}
-              <div className="flex items-center gap-2 ml-auto">
-                <span className="text-sm text-gray-500">Sort By:</span>
-                <select
-                  defaultValue={sort}
-                  onChange={(e) => {
-                    if (typeof window !== 'undefined') {
-                      const url = new URL(window.location.href)
-                      url.searchParams.set('sort', e.target.value)
-                      window.location.href = url.toString()
-                    }
-                  }}
-                  className="border border-gray-200 px-3 py-2 text-sm focus:outline-none focus:border-dark bg-white rounded-sm"
-                >
-                  <option value="featured">Top Sellers</option>
-                  <option value="price_asc">Price: Low to High</option>
-                  <option value="price_desc">Price: High to Low</option>
-                  <option value="rating">Customer Rating</option>
-                </select>
-              </div>
-            </div>
-
-            {/* Product grid */}
             {products.length === 0 ? (
               <div className="text-center py-24 bg-gray-50 border border-gray-100">
                 <div className="text-6xl mb-6 opacity-30">🔍</div>
@@ -240,8 +211,8 @@ export default async function ProductsPage({ searchParams }: PageProps) {
                   <div className="flex justify-center gap-1.5 pb-8 flex-wrap">
                     {page > 1 && (
                       <Link
-                        href={`?${new URLSearchParams({ ...searchParams, page: String(page - 1) })}`}
-                        className="w-10 h-10 border border-gray-200 flex items-center justify-center text-sm hover:border-dark hover:bg-gray-50 transition-colors"
+                        href={`/products?${new URLSearchParams({ ...spObj, page: String(page - 1) })}`}
+                        className="w-10 h-10 border border-gray-200 flex items-center justify-center text-sm hover:border-dark transition-colors"
                       >
                         ←
                       </Link>
@@ -249,11 +220,11 @@ export default async function ProductsPage({ searchParams }: PageProps) {
                     {Array.from({ length: Math.min(totalPages, 9) }, (_, i) => i + 1).map((p) => (
                       <Link
                         key={p}
-                        href={`?${new URLSearchParams({ ...searchParams, page: String(p) })}`}
+                        href={`/products?${new URLSearchParams({ ...spObj, page: String(p) })}`}
                         className={`w-10 h-10 border flex items-center justify-center text-sm font-semibold transition-colors ${
                           p === page
                             ? 'bg-[#c8102e] text-white border-[#c8102e]'
-                            : 'border-gray-200 hover:border-dark hover:bg-gray-50'
+                            : 'border-gray-200 hover:border-dark'
                         }`}
                       >
                         {p}
@@ -261,8 +232,8 @@ export default async function ProductsPage({ searchParams }: PageProps) {
                     ))}
                     {page < totalPages && (
                       <Link
-                        href={`?${new URLSearchParams({ ...searchParams, page: String(page + 1) })}`}
-                        className="w-10 h-10 border border-gray-200 flex items-center justify-center text-sm hover:border-dark hover:bg-gray-50 transition-colors"
+                        href={`/products?${new URLSearchParams({ ...spObj, page: String(page + 1) })}`}
+                        className="w-10 h-10 border border-gray-200 flex items-center justify-center text-sm hover:border-dark transition-colors"
                       >
                         →
                       </Link>
