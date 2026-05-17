@@ -15,12 +15,22 @@ export default function LoginPage() {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
-    const { error } = await supabase.auth.signInWithPassword({ email, password })
+    const { data, error } = await supabase.auth.signInWithPassword({ email, password })
     if (error) {
       toast.error(error.message)
     } else {
       toast.success('Welcome back!')
-      router.push('/account')
+      // Check role and redirect admins to /admin
+      const { data: profile } = await supabase
+        .from('profiles')
+        .select('role')
+        .eq('id', data.user!.id)
+        .single()
+      if (profile?.role === 'admin') {
+        router.push('/admin')
+      } else {
+        router.push('/account')
+      }
       router.refresh()
     }
     setLoading(false)

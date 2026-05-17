@@ -5,7 +5,7 @@ import { useRouter, usePathname } from 'next/navigation'
 import Link from 'next/link'
 import { supabase } from '@/lib/supabase'
 import type { Profile } from '@/lib/types'
-import { LayoutDashboard, Monitor, Image as ImageIcon, Package, Folder, Tag, ShoppingCart, Megaphone, LogOut, Menu, ExternalLink } from 'lucide-react'
+import { LayoutDashboard, Monitor, Image as ImageIcon, Package, Folder, Tag, ShoppingCart, Megaphone, LogOut, Menu, ExternalLink, TerminalSquare } from 'lucide-react'
 
 const NAV_ITEMS = [
   { href: '/admin', label: 'Dashboard', icon: <LayoutDashboard size={18} />, exact: true },
@@ -16,6 +16,7 @@ const NAV_ITEMS = [
   { href: '/admin/offers', label: 'Offers', icon: <Tag size={18} /> },
   { href: '/admin/orders', label: 'Orders', icon: <ShoppingCart size={18} /> },
   { href: '/admin/promo', label: 'Promo Bar', icon: <Megaphone size={18} /> },
+  { href: '/admin/sql', label: 'SQL Editor', icon: <TerminalSquare size={18} /> },
 ]
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
@@ -56,9 +57,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     <div className="min-h-screen bg-gray-light flex">
       {/* Sidebar */}
       <aside
-        className={`fixed inset-y-0 left-0 z-50 w-64 bg-dark flex flex-col transition-transform duration-200 lg:translate-x-0 lg:static lg:flex ${
-          sidebarOpen ? 'translate-x-0' : '-translate-x-full'
-        }`}
+        className={`fixed inset-y-0 left-0 z-50 w-64 bg-dark flex flex-col transition-transform duration-200 lg:translate-x-0 lg:static lg:flex ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'
+          }`}
       >
         {/* Logo */}
         <div className="px-5 py-5 border-b border-dark-3">
@@ -86,11 +86,10 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                 key={item.href}
                 href={item.href}
                 onClick={() => setSidebarOpen(false)}
-                className={`flex items-center gap-3 px-5 py-3 text-sm font-semibold border-l-4 transition-all admin-nav-link ${
-                  isActive
+                className={`flex items-center gap-3 px-5 py-3 text-sm font-semibold border-l-4 transition-all admin-nav-link ${isActive
                     ? 'border-l-primary text-primary bg-primary/10 active'
                     : 'border-l-transparent text-gray-400 hover:text-white'
-                }`}
+                  }`}
               >
                 <span>{item.icon}</span>
                 {item.label}
