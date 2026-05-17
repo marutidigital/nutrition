@@ -27,12 +27,16 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
   useEffect(() => {
     const check = async () => {
-      const { data: { user } } = await supabase.auth.getUser()
-      if (!user) { router.push('/auth/login'); return }
-      // No role check - any logged in user can access admin
-      const { data } = await supabase.from('profiles').select('*').eq('id', user.id).single()
-      setProfile(data as Profile)
-      setChecking(false)
+      try {
+        const { data: { user } } = await supabase.auth.getUser()
+        if (!user) { router.push('/auth/login'); return }
+        const { data } = await supabase.from('profiles').select('*').eq('id', user.id).single()
+        setProfile(data as Profile)
+      } catch (e) {
+        console.error('Admin check error:', e)
+      } finally {
+        setChecking(false)
+      }
     }
     check()
   }, [router])
