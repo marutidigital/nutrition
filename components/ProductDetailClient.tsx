@@ -82,9 +82,10 @@ export function ProductDetailClient({ product, discount }: ProductDetailClientPr
 
       {/* Short description */}
       {product.description_short && (
-        <p className="text-sm text-gray-500 leading-relaxed border-t border-gray-border pt-4">
-          {product.description_short}
-        </p>
+        <div 
+          className="text-sm text-gray-500 leading-relaxed border-t border-gray-border pt-4 prose prose-sm max-w-none"
+          dangerouslySetInnerHTML={{ __html: product.description_short.replace(/\\n/g, '<br/>') }}
+        />
       )}
 
       {/* Price */}

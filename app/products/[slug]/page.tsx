@@ -164,7 +164,7 @@ export default async function ProductDetailPage({ params }: PageProps) {
             </div>
             <div
               className="px-6 py-6 prose max-w-none"
-              dangerouslySetInnerHTML={{ __html: product.description_long }}
+              dangerouslySetInnerHTML={{ __html: product.description_long.replace(/\\n/g, '<br/>') }}
             />
           </div>
         )}
