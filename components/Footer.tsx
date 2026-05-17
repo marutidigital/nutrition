@@ -6,9 +6,8 @@ const footerColumns = [
   {
     title: 'Get Help',
     links: [
-      { label: 'Track Order', href: '/account/orders' },
-      { label: 'Contact Us', href: '/contact' },
-      { label: 'Help Center', href: '/help' },
+      { label: 'Track Order',   href: '/track-order' },
+      { label: 'Contact Us',    href: '/contact' },
       { label: 'Shipping Info', href: '/shipping' },
       { label: 'Return Policy', href: '/returns' },
     ],
@@ -16,22 +15,20 @@ const footerColumns = [
   {
     title: 'Shop',
     links: [
-      { label: 'All Products', href: '/products' },
-      { label: 'Protein', href: '/products?category=protein' },
-      { label: 'Pre-Workout', href: '/products?category=pre-workout' },
-      { label: 'Keto', href: '/products?category=keto' },
-      { label: 'New Arrivals', href: '/products?new=true' },
-      { label: 'Deals', href: '/products?badge=sale' },
+      { label: 'All Products',  href: '/products' },
+      { label: 'Protein',       href: '/products?category=Proteins' },
+      { label: 'Pre-Workout',   href: '/products?category=Pre Workout' },
+      { label: 'Creatine',      href: '/products?category=CREATINE' },
+      { label: 'New Arrivals',  href: '/products?new=true' },
+      { label: 'Deals',         href: '/products?badge=sale' },
     ],
   },
   {
     title: 'Company',
     links: [
       { label: 'About Us', href: '/about' },
-      { label: 'Blog', href: '/blog' },
-      { label: 'Careers', href: '/careers' },
-      { label: 'Affiliate Program', href: '/affiliate' },
-      { label: 'Science & Innovation', href: '/science' },
+      { label: 'Blog',     href: '/blog' },
+      { label: 'Contact',  href: '/contact' },
     ],
   },
 ]
