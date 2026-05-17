@@ -1,5 +1,6 @@
 import { Metadata } from 'next'
 import Link from 'next/link'
+import { Dumbbell, Zap, Scale, Leaf, Activity, Flame, Salad, Brain, BookOpen, CalendarDays, Clock } from 'lucide-react'
 
 export const metadata: Metadata = {
   title: 'Blog — NutriFitness.ch',
@@ -7,16 +8,16 @@ export const metadata: Metadata = {
 }
 
 const CATEGORIES = [
-  { name: 'Protein & Recovery',   slug: 'protein-recovery',  icon: '💪' },
-  { name: 'Pre-Workout',          slug: 'pre-workout',        icon: '⚡' },
-  { name: 'Weight Loss',          slug: 'weight-loss',        icon: '⚖️' },
-  { name: 'Vitamins & Health',    slug: 'vitamins-health',    icon: '🌿' },
-  { name: 'Muscle Building',      slug: 'muscle-building',    icon: '🏋️' },
-  { name: 'Sports Nutrition',     slug: 'sports-nutrition',   icon: '🏃' },
-  { name: 'Creatine',             slug: 'creatine',           icon: '🔥' },
-  { name: 'Diet & Lifestyle',     slug: 'diet-lifestyle',     icon: '🥗' },
-  { name: 'Mental Performance',   slug: 'mental-performance', icon: '🧠' },
-  { name: 'Beginner\'s Guide',    slug: 'beginners-guide',    icon: '📚' },
+  { name: 'Protein & Recovery',   slug: 'protein-recovery',  icon: <Dumbbell size={18} /> },
+  { name: 'Pre-Workout',          slug: 'pre-workout',        icon: <Zap size={18} /> },
+  { name: 'Weight Loss',          slug: 'weight-loss',        icon: <Scale size={18} /> },
+  { name: 'Vitamins & Health',    slug: 'vitamins-health',    icon: <Leaf size={18} /> },
+  { name: 'Muscle Building',      slug: 'muscle-building',    icon: <Activity size={18} /> },
+  { name: 'Sports Nutrition',     slug: 'sports-nutrition',   icon: <Flame size={18} /> },
+  { name: 'Creatine',             slug: 'creatine',           icon: <Zap size={18} /> },
+  { name: 'Diet & Lifestyle',     slug: 'diet-lifestyle',     icon: <Salad size={18} /> },
+  { name: 'Mental Performance',   slug: 'mental-performance', icon: <Brain size={18} /> },
+  { name: 'Beginner\'s Guide',    slug: 'beginners-guide',    icon: <BookOpen size={18} /> },
 ]
 
 export const BLOG_POSTS = [
@@ -287,9 +288,19 @@ export const BLOG_POSTS = [
   },
 ]
 
-export default function BlogPage() {
-  const featured = BLOG_POSTS[0]
-  const rest = BLOG_POSTS.slice(1)
+interface PageProps {
+  searchParams: { category?: string }
+}
+
+export default function BlogPage({ searchParams }: PageProps) {
+  const selectedCategory = searchParams?.category
+
+  const filteredPosts = selectedCategory
+    ? BLOG_POSTS.filter(p => p.category === selectedCategory)
+    : BLOG_POSTS
+
+  const featured = filteredPosts[0]
+  const rest = filteredPosts.slice(1)
 
   return (
     <div className="bg-white min-h-screen">
@@ -305,60 +316,90 @@ export default function BlogPage() {
       <div className="max-w-[1200px] mx-auto px-4 py-10">
         {/* Category filter pills */}
         <div className="flex flex-wrap gap-2 mb-10">
-          <Link href="/blog" className="px-4 py-2 bg-[#c8102e] text-white text-xs font-black tracking-widest uppercase rounded-sm">All</Link>
-          {CATEGORIES.map(cat => (
-            <Link
-              key={cat.slug}
-              href={`/blog?category=${cat.slug}`}
-              className="px-4 py-2 border-2 border-gray-200 hover:border-[#c8102e] hover:text-[#c8102e] text-xs font-black tracking-widest uppercase rounded-sm transition-all"
-            >
-              {cat.icon} {cat.name}
-            </Link>
-          ))}
+          <Link
+            href="/blog"
+            className={`px-4 py-2 text-xs font-black tracking-widest uppercase rounded-sm transition-all border-2 ${
+              !selectedCategory
+                ? 'bg-[#c8102e] border-[#c8102e] text-white'
+                : 'border-gray-200 text-dark hover:border-[#c8102e] hover:text-[#c8102e]'
+            }`}
+          >
+            All
+          </Link>
+          {CATEGORIES.map(cat => {
+            const isActive = selectedCategory === cat.slug
+            return (
+              <Link
+                key={cat.slug}
+                href={`/blog?category=${cat.slug}`}
+                className={`px-4 py-2 border-2 text-xs font-black tracking-widest uppercase rounded-sm transition-all ${
+                  isActive
+                    ? 'bg-[#c8102e] border-[#c8102e] text-white'
+                    : 'border-gray-200 text-dark hover:border-[#c8102e] hover:text-[#c8102e]'
+                }`}
+              >
+                {cat.icon} {cat.name}
+              </Link>
+            )
+          })}
         </div>
 
-        {/* Featured post */}
-        <Link href={`/blog/${featured.slug}`} className="group block mb-12 rounded-sm overflow-hidden border border-gray-100 hover:shadow-lg transition-shadow">
-          <div className="grid grid-cols-1 md:grid-cols-2">
-            <div
-              className="h-64 md:h-auto bg-cover bg-center"
-              style={{ backgroundImage: `url(${featured.image})` }}
-            />
-            <div className="p-8 bg-gray-50 flex flex-col justify-center">
-              <div className="flex items-center gap-2 mb-3">
-                <span className="bg-[#c8102e] text-white text-[10px] font-black px-2 py-1 tracking-widest uppercase">FEATURED</span>
-                <span className="text-xs text-gray-400">{featured.categoryName}</span>
-              </div>
-              <h2 className="font-display text-3xl text-dark group-hover:text-[#c8102e] transition-colors mb-3 leading-tight">{featured.title}</h2>
-              <p className="text-gray-500 text-sm leading-relaxed mb-4">{featured.excerpt}</p>
-              <div className="flex items-center gap-4 text-xs text-gray-400">
-                <span>📅 {featured.date}</span>
-                <span>⏱ {featured.readTime} read</span>
-              </div>
-            </div>
-          </div>
-        </Link>
-
-        {/* Grid of posts */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {rest.map(post => (
-            <Link key={post.slug} href={`/blog/${post.slug}`} className="group border border-gray-100 rounded-sm overflow-hidden hover:shadow-lg transition-shadow flex flex-col">
-              <div
-                className="h-48 bg-cover bg-center"
-                style={{ backgroundImage: `url(${post.image})` }}
-              />
-              <div className="p-5 flex flex-col flex-1">
-                <div className="text-[10px] font-black tracking-widest text-[#c8102e] uppercase mb-2">{post.categoryName}</div>
-                <h3 className="font-display text-xl text-dark group-hover:text-[#c8102e] transition-colors mb-2 leading-tight flex-1">{post.title}</h3>
-                <p className="text-gray-500 text-xs leading-relaxed mb-4 line-clamp-2">{post.excerpt}</p>
-                <div className="flex items-center justify-between text-[10px] text-gray-400 border-t border-gray-100 pt-3">
-                  <span>📅 {post.date}</span>
-                  <span>⏱ {post.readTime} read</span>
+        {/* Featured post / Grid of posts */}
+        {featured ? (
+          <>
+            <Link href={`/blog/${featured.slug}`} className="group block mb-12 rounded-sm overflow-hidden border border-gray-100 hover:shadow-lg transition-shadow">
+              <div className="grid grid-cols-1 md:grid-cols-2">
+                <div
+                  className="h-64 md:h-auto bg-cover bg-center"
+                  style={{ backgroundImage: `url(${featured.image})` }}
+                />
+                <div className="p-8 bg-gray-50 flex flex-col justify-center">
+                  <div className="flex items-center gap-2 mb-3">
+                    <span className="bg-[#c8102e] text-white text-[10px] font-black px-2 py-1 tracking-widest uppercase">FEATURED</span>
+                    <span className="text-xs text-gray-400">{featured.categoryName}</span>
+                  </div>
+                  <h2 className="font-display text-3xl text-dark group-hover:text-[#c8102e] transition-colors mb-3 leading-tight">{featured.title}</h2>
+                  <p className="text-gray-500 text-sm leading-relaxed mb-4">{featured.excerpt}</p>
+                  <div className="flex items-center gap-4 text-xs text-gray-400">
+                    <span className="flex items-center gap-1.5"><CalendarDays size={14} /> {featured.date}</span>
+                    <span className="flex items-center gap-1.5"><Clock size={14} /> {featured.readTime} read</span>
+                  </div>
                 </div>
               </div>
             </Link>
-          ))}
-        </div>
+
+            {rest.length > 0 && (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {rest.map(post => (
+                  <Link key={post.slug} href={`/blog/${post.slug}`} className="group border border-gray-100 rounded-sm overflow-hidden hover:shadow-lg transition-shadow flex flex-col">
+                    <div
+                      className="h-48 bg-cover bg-center"
+                      style={{ backgroundImage: `url(${post.image})` }}
+                    />
+                    <div className="p-5 flex flex-col flex-1">
+                      <div className="text-[10px] font-black tracking-widest text-[#c8102e] uppercase mb-2">{post.categoryName}</div>
+                      <h3 className="font-display text-xl text-dark group-hover:text-[#c8102e] transition-colors mb-2 leading-tight flex-1">{post.title}</h3>
+                      <p className="text-gray-500 text-xs leading-relaxed mb-4 line-clamp-2">{post.excerpt}</p>
+                      <div className="flex items-center justify-between text-[10px] text-gray-400 border-t border-gray-100 pt-3">
+                        <span className="flex items-center gap-1.5"><CalendarDays size={14} /> {post.date}</span>
+                        <span className="flex items-center gap-1.5"><Clock size={14} /> {post.readTime} read</span>
+                      </div>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            )}
+          </>
+        ) : (
+          <div className="bg-gray-50 border border-gray-100 p-12 text-center rounded-sm">
+            <div className="flex justify-center mb-4 text-gray-300"><BookOpen size={64} strokeWidth={1} /></div>
+            <h3 className="font-display text-2xl text-dark mb-2">NO ARTICLES YET</h3>
+            <p className="text-gray-400 text-sm mb-6">We are currently writing expert articles for this category. Stay tuned!</p>
+            <Link href="/blog" className="bg-[#c8102e] text-white px-8 py-3 text-xs font-black tracking-widest hover:bg-[#a50d28] transition-colors inline-block uppercase rounded-sm">
+              VIEW ALL ARTICLES
+            </Link>
+          </div>
+        )}
       </div>
     </div>
   )

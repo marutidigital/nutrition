@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react'
 import Link from 'next/link'
+import { Bot } from 'lucide-react'
 
 type Message = {
   role: 'user' | 'assistant'
@@ -66,7 +67,7 @@ export default function AIChat() {
     setStep('chat')
     setMessages([{
       role: 'assistant',
-      content: `Welcome, ${form.name}! 💪 I'm your personal NutriFitness advisor.\n\nTell me your fitness goal and I'll recommend the best supplements from our store!\n\nTry: "I want to build muscle", "Help me lose weight", "Best pre-workout", "Vitamins for energy"...`
+      content: `Welcome, ${form.name}! I'm your personal NutriFitness advisor.\n\nTell me your fitness goal and I'll recommend the best supplements from our store!\n\nTry: "I want to build muscle", "Help me lose weight", "Best pre-workout", "Vitamins for energy"...`
     }])
   }
 
@@ -80,19 +81,19 @@ export default function AIChat() {
     let reply = ''
 
     if (t.includes('hello') || t.includes('hi') || t.includes('hey')) {
-      reply = `Hey ${form.name}! 👋 What fitness goal can I help you with today? I can recommend protein shakes, pre-workouts, creatine, fat burners, vitamins and more!`
+      reply = `Hey ${form.name}! What fitness goal can I help you with today? I can recommend protein shakes, pre-workouts, creatine, fat burners, vitamins and more!`
     } else if (suggestions) {
       reply = `Based on your goal, here are my top picks for you:`
     } else if (t.includes('price') || t.includes('cheap') || t.includes('budget')) {
-      reply = `We have products starting from CHF 3.50! Proteins start at CHF 29, creatine from CHF 19. Browse our full range for the best value. 💰`
+      reply = `We have products starting from CHF 3.50! Proteins start at CHF 29, creatine from CHF 19. Browse our full range for the best value.`
     } else if (t.includes('ship') || t.includes('deliver')) {
-      reply = `We offer FREE shipping on orders over CHF 79! All orders ship within 24 hours from Switzerland. 🚚`
+      reply = `We offer FREE shipping on orders over CHF 75! All orders ship within 24 hours from Switzerland.`
     } else if (t.includes('return') || t.includes('refund')) {
-      reply = `We have a hassle-free 30-day return policy. Just contact us and we'll sort it quickly! 😊`
+      reply = `We have a 14-day return policy for unopened, sealed products. Just contact us and we'll help you!`
     } else if (t.includes('protein') || t.includes('whey')) {
       reply = `Great choice! Protein is essential for muscle recovery and growth. Here are our best sellers:`
     } else {
-      reply = `I'm here to help you find the perfect supplement, ${form.name}! Tell me your goal — muscle gain, weight loss, more energy, better recovery — and I'll point you to exactly the right products from our store. 💪`
+      reply = `I'm here to help you find the perfect supplement, ${form.name}! Tell me your goal — muscle gain, weight loss, more energy, better recovery — and I'll point you to exactly the right products from our store.`
     }
 
     setMessages(prev => [...prev, { role: 'assistant', content: reply, products: suggestions ?? undefined }])
@@ -145,7 +146,7 @@ export default function AIChat() {
         {step === 'form' && (
           <form onSubmit={handleFormSubmit} className="p-5 space-y-4">
             <div className="text-center">
-              <div className="text-3xl mb-2">💪</div>
+              <div className="flex justify-center mb-3"><Bot size={42} strokeWidth={1.5} className="text-dark" /></div>
               <div className="font-bold text-dark text-base">Get Personalised Advice</div>
               <div className="text-xs text-gray-500 mt-1">Fill in your details to start chatting with our AI supplement advisor</div>
             </div>

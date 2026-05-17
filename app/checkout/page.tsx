@@ -7,13 +7,14 @@ import Image from 'next/image'
 import { useCartStore } from '@/lib/cart'
 import { supabase } from '@/lib/supabase'
 import toast from 'react-hot-toast'
+import { ShoppingCart, PartyPopper } from 'lucide-react'
 
 export default function CheckoutPage() {
   const router = useRouter()
   const { items, totalPrice, clearCart } = useCartStore()
   const total = totalPrice()
-  const freeShipping = total >= 79
-  const shipping = freeShipping ? 0 : 9.90
+  const freeShipping = total >= 75
+  const shipping = freeShipping ? 0 : 5.90
   const orderTotal = total + shipping
 
   const [form, setForm] = useState({
@@ -30,7 +31,7 @@ export default function CheckoutPage() {
   if (items.length === 0) {
     return (
       <div className="max-w-xl mx-auto px-4 py-24 text-center page-transition">
-        <div className="text-6xl mb-4">🛒</div>
+        <div className="flex justify-center mb-4 text-gray-300"><ShoppingCart size={64} strokeWidth={1} /></div>
         <h1 className="font-display text-3xl text-dark mb-3">YOUR CART IS EMPTY</h1>
         <Link href="/products" className="bg-primary text-white px-8 py-3 text-sm font-bold hover:bg-primary-dark transition-colors inline-block">
           SHOP NOW
@@ -76,7 +77,7 @@ export default function CheckoutPage() {
     }
 
     clearCart()
-    toast.success('🎉 Order placed successfully!')
+    toast.success('Order placed successfully!')
     router.push('/account')
   }
 
@@ -146,7 +147,7 @@ export default function CheckoutPage() {
             </button>
             <p className="text-xs text-gray-400 text-center">
               By placing your order you agree to our{' '}
-              <Link href="/terms" className="text-primary hover:underline">Terms & Conditions</Link>.
+              <Link href="/shipping" className="text-primary hover:underline">Terms & Conditions</Link>.
             </p>
           </div>
 
@@ -182,7 +183,7 @@ export default function CheckoutPage() {
               </div>
               <div className="border-t border-gray-border pt-4 space-y-2">
                 <div className="flex justify-between text-sm"><span className="text-gray-400">Subtotal</span><span className="font-semibold">CHF {total.toFixed(2)}</span></div>
-                <div className="flex justify-between text-sm"><span className="text-gray-400">Shipping</span><span className={`font-semibold ${freeShipping ? 'text-green-600' : ''}`}>{freeShipping ? 'Free 🎉' : `CHF ${shipping.toFixed(2)}`}</span></div>
+                <div className="flex justify-between text-sm"><span className="text-gray-400">Shipping</span><span className={`font-semibold flex items-center gap-1 ${freeShipping ? 'text-green-600' : ''}`}>{freeShipping ? <><PartyPopper size={16} /> Free</> : `CHF ${shipping.toFixed(2)}`}</span></div>
                 <div className="flex justify-between text-base font-bold border-t border-gray-border pt-2"><span>Total</span><span>CHF {orderTotal.toFixed(2)}</span></div>
               </div>
             </div>

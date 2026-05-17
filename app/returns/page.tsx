@@ -1,25 +1,26 @@
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Return Policy | NutriFitness.ch',
-  description: 'NutriFitness 30-day hassle-free return policy.',
+  title: 'Politique de Retour | NutriFitness.ch',
+  description: 'Informations sur les retours faciles sous 14 jours pour vos compléments alimentaires chez NutriFitness.ch.',
 }
 
 export default function ReturnsPage() {
   return (
     <div className="bg-white min-h-screen">
       <div className="bg-[#111] text-white py-14 px-4 text-center">
-        <h1 className="font-display text-5xl font-black tracking-wide">RETURN <span className="text-[#c8102e]">POLICY</span></h1>
-        <p className="text-gray-400 mt-2">30-day hassle-free returns. No questions asked.</p>
+        <h1 className="font-display text-5xl font-black tracking-wide">POLITIQUE DE <span className="text-[#c8102e]">RETOUR</span></h1>
+        <p className="text-gray-400 mt-2">Votre satisfaction est notre priorité absolue.</p>
       </div>
+
       <div className="max-w-[800px] mx-auto px-4 py-12 space-y-8">
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
           {[
-            { icon: '📦', title: '30 Days', sub: 'Return window from delivery' },
-            { icon: '💰', title: 'Full Refund', sub: 'Original payment method' },
-            { icon: '📧', title: 'Easy Process', sub: 'Just email us to start' },
+            { icon: '📦', title: '14 Jours', sub: 'Délai de retour dès réception' },
+            { icon: '🔒', title: 'Non Ouvert', sub: 'Produit scellé et en bon état' },
+            { icon: '📩', title: 'Contact Préalable', sub: 'Contactez-nous avant le renvoi' },
           ].map(item => (
-            <div key={item.title} className="text-center border border-gray-100 p-6 rounded-sm">
+            <div key={item.title} className="text-center border border-gray-100 p-6 rounded-sm bg-gray-50/20">
               <div className="text-4xl mb-2">{item.icon}</div>
               <div className="font-black text-dark text-xl">{item.title}</div>
               <div className="text-xs text-gray-500 mt-1">{item.sub}</div>
@@ -28,12 +29,24 @@ export default function ReturnsPage() {
         </div>
 
         {[
-          { title: 'Eligibility', body: 'Items must be returned within 30 days of delivery. Products must be unused, unopened, and in original packaging. Opened supplements cannot be returned for health and safety reasons unless they are defective.' },
-          { title: 'How to Return', body: '1. Email us at returns@nutrifitness.ch with your order number.\n2. We\'ll send you a prepaid return label within 24 hours.\n3. Pack the item securely and drop it at any post office.\n4. Your refund will be processed within 5–7 business days of receiving the return.' },
-          { title: 'Defective or Damaged Items', body: 'If you received a damaged or defective product, we\'ll replace it or issue a full refund immediately. Just email us a photo of the damage within 7 days of delivery.' },
-          { title: 'Refund Timeline', body: 'Refunds are processed within 5–7 business days after we receive your return. The money will appear in your account within 3–5 business days depending on your bank.' },
+          {
+            title: 'Conditions d’Éligibilité',
+            body: 'Vous disposez d’un délai de 14 jours à compter de la réception de votre colis pour nous retourner un produit. Les articles doivent être retournés non ouverts, scellés, inutilisés et dans leur emballage d’origine en parfait état. Pour des raisons d’hygiène et de sécurité, nous ne pouvons accepter le retour de compléments alimentaires entamés ou ouverts.'
+          },
+          {
+            title: 'Procédure de Retour',
+            body: '1. Contactez obligatoirement notre équipe par email à info@nutrifitness.ch en indiquant votre numéro de commande.\n2. Préparez votre colis soigneusement avec le produit bien protégé.\n3. Renvoyez le colis à l’adresse de notre boutique :\n   NutriFitness\n   Rue des Pâquis 34\n   1201 Genève, Suisse.'
+          },
+          {
+            title: 'Frais de Retour',
+            body: 'Les frais de retour sont à la charge exclusive du client, sauf s’il s’agit d’une erreur de notre part lors de la préparation de la commande ou d’un produit avéré défectueux. Dans ce cas, nous prendrons en charge le bon d’expédition.'
+          },
+          {
+            title: 'Remboursements',
+            body: 'Une fois le retour réceptionné et validé par notre équipe, nous procéderons au remboursement sur le mode de paiement d’origine. Le traitement prend généralement entre 5 à 7 jours ouvrables après réception du colis.'
+          },
         ].map(section => (
-          <div key={section.title} className="border-b border-gray-100 pb-6">
+          <div key={section.title} className="border-b border-gray-100 pb-6 last:border-0 last:pb-0">
             <h2 className="font-display text-xl text-dark font-black mb-3 flex items-center gap-2">
               <span className="w-6 h-6 bg-[#c8102e] rounded-full flex items-center justify-center text-white text-[10px]">→</span>
               {section.title}
@@ -42,11 +55,11 @@ export default function ReturnsPage() {
           </div>
         ))}
 
-        <div className="bg-[#c8102e] text-white p-6 rounded-sm text-center">
-          <div className="font-bold mb-1">Need to Return Something?</div>
-          <div className="text-sm text-red-100 mb-3">Contact our support team and we'll take care of you.</div>
-          <a href="mailto:returns@nutrifitness.ch" className="bg-white text-[#c8102e] font-black px-6 py-2.5 text-sm inline-block hover:bg-gray-100 transition-colors">
-            EMAIL US →
+        <div className="bg-[#c8102e] text-white p-8 rounded-sm text-center">
+          <div className="font-bold text-lg mb-1">Une question sur un retour ?</div>
+          <div className="text-sm text-red-100 mb-4">Contactez notre support et nous vous répondrons sous 24h.</div>
+          <a href="mailto:info@nutrifitness.ch" className="bg-white text-[#c8102e] font-black px-6 py-2.5 text-sm inline-block hover:bg-gray-100 transition-colors uppercase rounded-sm">
+            NOUS ÉCRIRE →
           </a>
         </div>
       </div>

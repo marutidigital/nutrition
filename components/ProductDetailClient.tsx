@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { useCartStore } from '@/lib/cart'
 import toast from 'react-hot-toast'
 import type { Product } from '@/lib/types'
+import { Truck, RotateCcw, ShieldCheck, Flame, RefreshCcw, Star, Check, X, Heart } from 'lucide-react'
 
 interface ProductDetailClientProps {
   product: Product
@@ -18,19 +19,13 @@ function StarRating({ rating, count }: { rating: number; count: number }) {
   return (
     <div className="flex items-center gap-2">
       <div className="flex items-center gap-0.5">
-        {[1, 2, 3, 4, 5].map((star) => (
-          <span
-            key={star}
-            className={`text-base ${
-              star <= fullStars
-                ? 'text-amber-400'
-                : star === fullStars + 1 && hasHalf
-                ? 'text-amber-300'
-                : 'text-gray-300'
-            }`}
-          >
-            ★
-          </span>
+        {[...Array(5)].map((_, i) => (
+          <Star 
+            key={i} 
+            size={14} 
+            className={i < fullStars ? 'text-amber-400' : hasHalf && i === fullStars ? 'text-amber-400' : 'text-gray-300'} 
+            fill={i < fullStars || (hasHalf && i === fullStars) ? 'currentColor' : 'none'}
+          />
         ))}
       </div>
       <a href="#reviews" className="text-sm text-[#c8102e] font-semibold hover:underline">
@@ -123,8 +118,8 @@ export function ProductDetailClient({ product, discount, images }: ProductDetail
           )}
 
           {/* Wishlist */}
-          <button className="absolute top-3 right-3 w-9 h-9 bg-white border border-gray-200 rounded-full flex items-center justify-center hover:border-[#c8102e] hover:text-[#c8102e] transition-colors shadow-sm">
-            ♡
+          <button className="absolute top-4 right-4 w-10 h-10 bg-white/90 rounded-full flex items-center justify-center hover:text-[#c8102e] hover:bg-white transition-colors">
+            <Heart size={20} />
           </button>
         </div>
 
@@ -148,12 +143,12 @@ export function ProductDetailClient({ product, discount, images }: ProductDetail
         {/* Guarantees strip */}
         <div className="grid grid-cols-3 gap-3 mt-4 border border-gray-100 p-4">
           {[
-            { icon: '🚚', label: 'Free Shipping', sub: 'On orders over CHF 79' },
-            { icon: '↩', label: '30-Day Returns', sub: 'No questions asked' },
-            { icon: '🛡', label: 'Swiss Quality', sub: 'Lab certified' },
+            { icon: <Truck size={24} className="mx-auto" strokeWidth={1.5} />, label: 'Free Shipping', sub: 'On orders over CHF 75' },
+            { icon: <RotateCcw size={24} className="mx-auto" strokeWidth={1.5} />, label: '14-Day Returns', sub: 'Unopened, sealed' },
+            { icon: <ShieldCheck size={24} className="mx-auto" strokeWidth={1.5} />, label: 'Swiss Quality', sub: 'Lab certified' },
           ].map(({ icon, label, sub }) => (
             <div key={label} className="text-center">
-              <div className="text-2xl mb-1">{icon}</div>
+              <div className="mb-2 text-dark">{icon}</div>
               <div className="text-[11px] font-bold text-dark">{label}</div>
               <div className="text-[10px] text-gray-400">{sub}</div>
             </div>
@@ -179,11 +174,9 @@ export function ProductDetailClient({ product, discount, images }: ProductDetail
         </h1>
 
         {/* Purchased count */}
-        <div className="flex items-center gap-1.5 text-sm">
-          <span className="text-amber-500">🔥</span>
-          <span className="font-semibold text-amber-700">
-            {Math.floor(Math.random() * 500 + 50)} purchased this month
-          </span>
+        <div className="bg-orange-50 border border-orange-100 px-4 py-2 flex items-center gap-2 text-xs font-semibold mt-4">
+          <Flame size={16} className="text-amber-500" />
+          <span className="text-orange-900">High demand! {Math.floor(Math.random() * 50 + 5)} people are looking at this right now.</span>
         </div>
 
         {/* Rating */}
@@ -284,7 +277,7 @@ export function ProductDetailClient({ product, discount, images }: ProductDetail
               <div className="flex items-center gap-2 flex-wrap">
                 <span className="text-sm font-black text-dark">CHF {subscribePrice.toFixed(2)}</span>
                 <span className="text-[10px] bg-green-100 text-green-700 font-bold px-2 py-0.5 rounded-full flex items-center gap-1">
-                  🔄 Subscribe to Save
+                  <RefreshCcw size={14} /> Subscribe to Save
                 </span>
               </div>
               <div className="text-xs text-green-700 font-semibold mt-0.5">Save 10% On Every Order + Free Shipping</div>
@@ -337,7 +330,7 @@ export function ProductDetailClient({ product, discount, images }: ProductDetail
             {!product.in_stock
               ? 'OUT OF STOCK'
               : adding
-              ? '✓ ADDED!'
+              ? <span className="flex items-center justify-center gap-2"><Check size={18} /> ADDED!</span>
               : purchaseType === 'subscribe'
               ? `ADD SUBSCRIPTION TO CART`
               : `ADD TO CART — CHF ${(displayPrice * quantity).toFixed(2)}`}
@@ -346,7 +339,7 @@ export function ProductDetailClient({ product, discount, images }: ProductDetail
 
         {/* Points Banner */}
         <div className="flex items-center justify-center gap-2 bg-[#fff8e1] border border-amber-200 py-3 px-4 rounded-sm">
-          <span className="text-amber-500">★</span>
+          <Star size={16} className="text-amber-500" />
           <span className="text-sm font-bold text-dark">
             EARN <span className="text-[#c8102e]">{pointsEarned} POINTS</span> WITH THIS PURCHASE!
           </span>
@@ -374,8 +367,8 @@ export function ProductDetailClient({ product, discount, images }: ProductDetail
           )}
           <div>
             <div className="text-[10px] font-bold tracking-wider text-gray-400 uppercase">Availability</div>
-            <div className={`font-bold ${product.in_stock ? 'text-green-600' : 'text-[#c8102e]'}`}>
-              {product.in_stock ? '✓ In Stock' : '✗ Out of Stock'}
+            <div className={`font-semibold flex items-center gap-2 ${product.in_stock ? 'text-green-600' : 'text-red-500'}`}>
+              {product.in_stock ? <><Check size={16} /> In Stock</> : <><X size={16} /> Out of Stock</>}
             </div>
           </div>
         </div>

@@ -96,7 +96,7 @@ export default function AdminPromoPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="md:col-span-2">
               <label className="block text-xs font-bold tracking-wider text-gray-400 uppercase mb-1.5">Message Text *</label>
-              <input value={form.text} onChange={e => setForm(p => ({ ...p, text: e.target.value }))} placeholder="Free Shipping on Orders over CHF 79" className="w-full border border-gray-border px-4 py-3 text-sm focus:outline-none focus:border-primary" />
+              <input value={form.text} onChange={e => setForm(p => ({ ...p, text: e.target.value }))} placeholder="Free Shipping on Orders over CHF 75" className="w-full border border-gray-border px-4 py-3 text-sm focus:outline-none focus:border-primary" />
             </div>
             <div>
               <label className="block text-xs font-bold tracking-wider text-gray-400 uppercase mb-1.5">Link (optional)</label>

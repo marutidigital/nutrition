@@ -8,7 +8,7 @@ import type { Banner, Category, Product } from '@/lib/types'
 export const metadata: Metadata = {
   title: 'NutriFitness.ch — Premium Swiss Supplements',
   description:
-    'Premium Swiss nutrition and fitness supplements. Keto, protein, pre-workout and more. Free shipping over CHF 79.',
+    'Premium Swiss nutrition and fitness supplements. Keto, protein, pre-workout and more. Free shipping over CHF 75.',
 }
 
 export const revalidate = 60

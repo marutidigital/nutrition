@@ -44,6 +44,8 @@ interface PageProps {
     page?: string
     min_price?: string
     max_price?: string
+    badge?: string
+    sale?: string
   }
 }
 
@@ -61,6 +63,9 @@ export default async function ProductsPage({ searchParams }: PageProps) {
   if (searchParams.new === 'true') query = query.eq('is_new', true)
   if (searchParams.min_price) query = query.gte('price', Number(searchParams.min_price))
   if (searchParams.max_price) query = query.lte('price', Number(searchParams.max_price))
+  if (searchParams.badge === 'sale' || searchParams.sale === 'true') {
+    query = query.not('price_original', 'is', null)
+  }
 
   const sort = searchParams.sort ?? 'featured'
   if (sort === 'price_asc') query = query.order('price', { ascending: true })
@@ -84,8 +89,14 @@ export default async function ProductsPage({ searchParams }: PageProps) {
   const activeCategory = searchParams.category ?? ''
   const searchQuery = searchParams.q ?? ''
 
-  const activeCategoryLabel =
-    (SHOP_CATEGORIES.find((c) => c.slug === activeCategory)?.name ?? activeCategory) || 'All Products'
+  let activeCategoryLabel = 'All Products'
+  if (activeCategory) {
+    activeCategoryLabel = (SHOP_CATEGORIES.find((c) => c.slug === activeCategory)?.name ?? activeCategory)
+  } else if (searchParams.badge === 'sale' || searchParams.sale === 'true') {
+    activeCategoryLabel = 'Sale & Deals'
+  } else if (searchParams.new === 'true') {
+    activeCategoryLabel = 'New Arrivals'
+  }
 
   // Build plain searchParams object for passing to client component
   const spObj: Record<string, string> = {}

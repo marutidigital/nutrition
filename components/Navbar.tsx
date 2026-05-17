@@ -6,6 +6,7 @@ import { useCartStore } from '@/lib/cart'
 import { supabase } from '@/lib/supabase'
 import type { User } from '@supabase/supabase-js'
 import type { Profile } from '@/lib/types'
+import { Menu, X, Search, User as UserIcon, ShoppingCart, Settings } from 'lucide-react'
 
 export function Navbar() {
   const [user, setUser] = useState<User | null>(null)
@@ -99,8 +100,8 @@ export function Navbar() {
               placeholder="What can we help you find today?"
               className="w-full border-2 border-gray-200 hover:border-gray-400 focus:border-dark px-4 py-2.5 rounded-sm text-sm focus:outline-none transition-colors pr-10"
             />
-            <button type="submit" className="absolute right-3 text-lg text-gray-500 hover:text-dark transition-colors">
-              🔍
+            <button type="submit" className="absolute right-3 text-gray-500 hover:text-dark transition-colors">
+              <Search size={20} />
             </button>
           </form>
 
@@ -110,13 +111,13 @@ export function Navbar() {
               className="flex items-center justify-center w-10 h-10 rounded-full hover:bg-gray-100 transition-colors relative"
               title={user ? 'Account' : 'Sign In'}
             >
-              <span className="text-xl text-dark">👤</span>
+              <UserIcon size={24} className="text-dark" />
               {user && <span className="absolute -top-1 -right-1 bg-green-500 w-2.5 h-2.5 rounded-full border-2 border-white" />}
             </Link>
 
             {profile?.role === 'admin' && (
               <Link href="/admin" className="flex items-center justify-center w-10 h-10 rounded-full hover:bg-gray-100 transition-colors" title="Admin">
-                <span className="text-xl text-primary">⚙️</span>
+                <Settings size={24} className="text-primary" />
               </Link>
             )}
 
@@ -124,7 +125,7 @@ export function Navbar() {
               onClick={openCart}
               className="flex items-center justify-center w-10 h-10 rounded-full hover:bg-gray-100 transition-colors relative"
             >
-              <span className="text-xl text-dark">🛒</span>
+              <ShoppingCart size={24} className="text-dark" />
               {itemCount > 0 && (
                 <span className="absolute top-0 right-0 bg-primary text-white text-[9px] font-black min-w-[18px] min-h-[18px] px-1 rounded-full flex items-center justify-center shadow-sm">
                   {itemCount > 99 ? '99+' : itemCount}
@@ -134,9 +135,9 @@ export function Navbar() {
 
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
-              className="sm:hidden p-2 text-2xl text-dark hover:bg-gray-100 rounded-md"
+              className="sm:hidden p-2 text-dark hover:bg-gray-100 rounded-md"
             >
-              ☰
+              <Menu size={28} />
             </button>
           </div>
         </div>
@@ -174,7 +175,7 @@ export function Navbar() {
                   placeholder="Search products..."
                   className="w-full border border-gray-300 px-3 py-2 text-sm rounded-sm focus:outline-none"
                 />
-                <button type="submit" className="absolute right-3 text-gray-500">🔍</button>
+                <button type="submit" className="absolute right-3 text-gray-500"><Search size={20} /></button>
               </form>
               {subNavLinks.map((link) => (
                 <Link
@@ -189,9 +190,9 @@ export function Navbar() {
               <Link
                 href={user ? '/account' : '/auth/login'}
                 onClick={() => setMobileOpen(false)}
-                className="block py-2.5 text-xs font-black tracking-widest text-dark mt-2 border-t border-gray-200"
+                className="flex items-center gap-2 py-2.5 text-xs font-black tracking-widest text-dark mt-2 border-t border-gray-200"
               >
-                👤 {user ? 'MY ACCOUNT' : 'SIGN IN / REGISTER'}
+                <UserIcon size={16} /> {user ? 'MY ACCOUNT' : 'SIGN IN / REGISTER'}
               </Link>
             </div>
           </div>
@@ -202,7 +203,7 @@ export function Navbar() {
       <div className="bg-[#000000] text-white py-2 px-4 text-[10px] font-black tracking-widest uppercase border-b border-gray-800">
         <div className="max-w-[1400px] mx-auto grid grid-cols-1 md:grid-cols-3 gap-2 text-center items-center">
           <div className="hover:text-primary transition-colors cursor-pointer">Buy 1, Get 1 50% Off!</div>
-          <div className="hidden md:block border-x border-gray-700 px-4 hover:text-primary transition-colors cursor-pointer">Free Shipping Over CHF 79</div>
+          <div className="hidden md:block border-x border-gray-700 px-4 hover:text-primary transition-colors cursor-pointer">Free Shipping Over CHF 75</div>
           <div className="hidden md:block hover:text-primary transition-colors cursor-pointer">Save 10% When You Pick Up In-Store!</div>
         </div>
       </div>
@@ -223,9 +224,9 @@ export function Navbar() {
               <h2 className="font-display text-3xl font-black tracking-wide">SIGN UP FOR PRO</h2>
               <button
                 onClick={() => setProOpen(false)}
-                className="w-9 h-9 flex items-center justify-center hover:bg-gray-100 rounded-full text-xl transition-colors"
+                className="w-9 h-9 flex items-center justify-center hover:bg-gray-100 rounded-full transition-colors"
               >
-                ✕
+                <X size={24} />
               </button>
             </div>
 

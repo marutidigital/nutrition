@@ -3,18 +3,21 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { useCartStore } from '@/lib/cart'
+import { ShoppingCart, ArrowLeft, PartyPopper, Lock, ShieldCheck, RotateCcw, MapPin } from 'lucide-react'
 
 export default function CartPage() {
   const { items, removeItem, updateQuantity, totalPrice, totalItems, clearCart } = useCartStore()
   const total = totalPrice()
   const count = totalItems()
-  const freeShipping = total >= 79
-  const shippingCost = freeShipping ? 0 : 9.90
+  const freeShipping = total >= 75
+  const shippingCost = freeShipping ? 0 : 5.90
 
   if (count === 0) {
     return (
       <div className="max-w-2xl mx-auto px-4 py-24 text-center page-transition">
-        <div className="text-7xl mb-6">🛒</div>
+        <div className="flex justify-center mb-6 text-gray-300">
+          <ShoppingCart size={80} strokeWidth={1} />
+        </div>
         <h1 className="font-display text-4xl text-dark mb-3 tracking-wide">YOUR CART IS EMPTY</h1>
         <p className="text-gray-400 mb-8">Add some products to get started!</p>
         <Link href="/products" className="bg-primary text-white px-10 py-4 text-sm font-bold tracking-wider hover:bg-primary-dark transition-colors inline-block">
@@ -43,21 +46,21 @@ export default function CartPage() {
             <div className="bg-gray-light border border-gray-border p-4">
               <div className="flex justify-between text-sm mb-2">
                 <span className="font-semibold text-dark">
-                  Add CHF {(79 - total).toFixed(2)} more for <span className="text-primary font-bold">FREE shipping!</span>
+                  Add CHF {(75 - total).toFixed(2)} more for <span className="text-primary font-bold">FREE shipping!</span>
                 </span>
-                <span className="text-gray-400">{Math.round((total / 79) * 100)}%</span>
+                <span className="text-gray-400">{Math.round((total / 75) * 100)}%</span>
               </div>
               <div className="h-2 bg-gray-border rounded-full overflow-hidden">
                 <div
                   className="h-full bg-primary transition-all duration-300"
-                  style={{ width: `${Math.min((total / 79) * 100, 100)}%` }}
+                  style={{ width: `${Math.min((total / 75) * 100, 100)}%` }}
                 />
               </div>
             </div>
           )}
           {freeShipping && (
-            <div className="bg-green-50 border border-green-200 p-3 text-sm text-green-700 font-semibold text-center">
-              🎉 You qualify for FREE shipping!
+            <div className="bg-green-50 border border-green-200 p-3 text-sm text-green-700 font-semibold text-center flex items-center justify-center gap-2">
+              <PartyPopper size={18} /> You qualify for FREE shipping!
             </div>
           )}
 
@@ -100,7 +103,7 @@ export default function CartPage() {
           ))}
 
           <Link href="/products" className="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-primary transition-colors">
-            ← Continue Shopping
+            <ArrowLeft size={16} /> Continue Shopping
           </Link>
         </div>
 
@@ -115,8 +118,8 @@ export default function CartPage() {
               </div>
               <div className="flex justify-between text-sm">
                 <span className="text-gray-500">Shipping</span>
-                <span className={`font-semibold ${freeShipping ? 'text-green-600' : 'text-dark'}`}>
-                  {freeShipping ? '🎉 FREE' : `CHF ${shippingCost.toFixed(2)}`}
+                <span className={`font-semibold flex items-center gap-1 ${freeShipping ? 'text-green-600' : 'text-dark'}`}>
+                  {freeShipping ? <><PartyPopper size={16} /> FREE</> : `CHF ${shippingCost.toFixed(2)}`}
                 </span>
               </div>
               <div className="border-t border-gray-border pt-3 flex justify-between text-base font-bold">
@@ -132,15 +135,22 @@ export default function CartPage() {
               PROCEED TO CHECKOUT
             </Link>
 
-            <div className="text-center text-xs text-gray-400 space-y-1">
-              <div>🔒 Secure checkout</div>
-              <div>Free shipping over CHF 79 · 30-day returns</div>
+            <div className="flex flex-col items-center text-xs text-gray-400 space-y-1">
+              <div className="flex items-center gap-1.5"><Lock size={12} /> Secure checkout</div>
+              <div>Free shipping over CHF 75 · 14-day returns</div>
             </div>
 
             {/* Trust logos */}
             <div className="mt-4 pt-4 border-t border-gray-border grid grid-cols-3 gap-2 text-center">
-              {['🛡 SSL Secure', '↩ Free Returns', '🇨🇭 Swiss Store'].map(t => (
-                <div key={t} className="text-[10px] font-bold text-gray-400">{t}</div>
+              {[
+                { icon: <ShieldCheck size={18} className="mx-auto mb-1" />, text: 'SSL Secure' },
+                { icon: <RotateCcw size={18} className="mx-auto mb-1" />, text: '14-Day Returns' },
+                { icon: <MapPin size={18} className="mx-auto mb-1" />, text: 'Swiss Store' }
+              ].map(t => (
+                <div key={t.text} className="text-[10px] font-bold text-gray-400">
+                  {t.icon}
+                  {t.text}
+                </div>
               ))}
             </div>
           </div>

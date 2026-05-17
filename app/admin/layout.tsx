@@ -5,16 +5,17 @@ import { useRouter, usePathname } from 'next/navigation'
 import Link from 'next/link'
 import { supabase } from '@/lib/supabase'
 import type { Profile } from '@/lib/types'
+import { LayoutDashboard, Monitor, Image as ImageIcon, Package, Folder, Tag, ShoppingCart, Megaphone, LogOut, Menu, ExternalLink } from 'lucide-react'
 
 const NAV_ITEMS = [
-  { href: '/admin', label: 'Dashboard', icon: '📊', exact: true },
-  { href: '/admin/pos', label: 'Point of Sale', icon: '💻' },
-  { href: '/admin/banners', label: 'Banners', icon: '🖼' },
-  { href: '/admin/products', label: 'Products', icon: '📦' },
-  { href: '/admin/categories', label: 'Categories', icon: '📂' },
-  { href: '/admin/offers', label: 'Offers', icon: '🏷' },
-  { href: '/admin/orders', label: 'Orders', icon: '🛒' },
-  { href: '/admin/promo', label: 'Promo Bar', icon: '📢' },
+  { href: '/admin', label: 'Dashboard', icon: <LayoutDashboard size={18} />, exact: true },
+  { href: '/admin/pos', label: 'Point of Sale', icon: <Monitor size={18} /> },
+  { href: '/admin/banners', label: 'Banners', icon: <ImageIcon size={18} /> },
+  { href: '/admin/products', label: 'Products', icon: <Package size={18} /> },
+  { href: '/admin/categories', label: 'Categories', icon: <Folder size={18} /> },
+  { href: '/admin/offers', label: 'Offers', icon: <Tag size={18} /> },
+  { href: '/admin/orders', label: 'Orders', icon: <ShoppingCart size={18} /> },
+  { href: '/admin/promo', label: 'Promo Bar', icon: <Megaphone size={18} /> },
 ]
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
@@ -109,7 +110,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             onClick={() => supabase.auth.signOut().then(() => router.push('/auth/login'))}
             className="flex items-center gap-2 text-xs text-gray-500 hover:text-primary transition-colors"
           >
-            🚪 Sign Out
+            <LogOut size={14} /> Sign Out
           </button>
         </div>
       </aside>
@@ -130,7 +131,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             onClick={() => setSidebarOpen(!sidebarOpen)}
             className="lg:hidden p-2 border border-gray-border"
           >
-            ☰
+            <Menu size={20} />
           </button>
           <div className="font-display text-xl text-dark tracking-wide">
             {NAV_ITEMS.find(i => i.exact ? pathname === i.href : pathname.startsWith(i.href))?.label ?? 'Admin'}
@@ -139,9 +140,9 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             <Link
               href="/products"
               target="_blank"
-              className="text-xs text-gray-400 hover:text-primary transition-colors"
+              className="flex items-center gap-1.5 text-xs text-gray-400 hover:text-primary transition-colors"
             >
-              View Store ↗
+              View Store <ExternalLink size={12} />
             </Link>
           </div>
         </header>

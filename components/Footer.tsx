@@ -4,29 +4,29 @@ import Link from 'next/link'
 
 const footerColumns = [
   {
-    title: 'Get Help',
+    title: 'Aide & Support',
     links: [
-      { label: 'Track Order',   href: '/track-order' },
-      { label: 'Contact Us',    href: '/contact' },
-      { label: 'Shipping Info', href: '/shipping' },
-      { label: 'Return Policy', href: '/returns' },
+      { label: 'Suivi de commande',   href: '/track-order' },
+      { label: 'Contactez-nous',    href: '/contact' },
+      { label: 'Livraison & Expédition', href: '/shipping' },
+      { label: 'Politique de retour', href: '/returns' },
+      { label: 'FAQ', href: '/faq' },
     ],
   },
   {
-    title: 'Shop',
+    title: 'Boutique',
     links: [
-      { label: 'All Products',  href: '/products' },
-      { label: 'Protein',       href: '/products?category=Proteins' },
-      { label: 'Pre-Workout',   href: '/products?category=Pre Workout' },
-      { label: 'Creatine',      href: '/products?category=CREATINE' },
-      { label: 'New Arrivals',  href: '/products?new=true' },
-      { label: 'Deals',         href: '/products?badge=sale' },
+      { label: 'Tous les produits',  href: '/products' },
+      { label: 'Protéines',       href: '/products?category=Proteins' },
+      { label: 'Pré-Workout',   href: '/products?category=Pre Workout' },
+      { label: 'Créatine',      href: '/products?category=CREATINE' },
+      { label: 'Nouveautés',  href: '/products?new=true' },
     ],
   },
   {
-    title: 'Company',
+    title: 'Entreprise',
     links: [
-      { label: 'About Us', href: '/about' },
+      { label: 'À propos', href: '/about' },
       { label: 'Blog',     href: '/blog' },
       { label: 'Contact',  href: '/contact' },
     ],
@@ -34,11 +34,9 @@ const footerColumns = [
 ]
 
 const socials = [
-  { label: 'f', name: 'Facebook', href: '#' },
-  { label: 'ig', name: 'Instagram', href: '#' },
-  { label: '▶', name: 'YouTube', href: '#' },
-  { label: '♫', name: 'TikTok', href: '#' },
-  { label: 'X', name: 'Twitter/X', href: '#' },
+  { label: 'fb', name: 'Facebook', href: 'https://www.facebook.com/p/NutriFit-100069395283617/' },
+  { label: 'ig', name: 'Instagram', href: 'https://www.instagram.com/nutrifitness.ch/' },
+  { label: 'wa', name: 'WhatsApp', href: 'https://wa.me/41792503564?text=Je%20suis%20int%C3%A9ress%C3%A9(e)%20%C3%A0%20en%20savoir%20plus%20sur%20vos%20produits' },
 ]
 
 export function Footer() {
@@ -48,10 +46,10 @@ export function Footer() {
       <div className="bg-gray-light border-b border-gray-border py-6 px-4">
         <div className="max-w-[1400px] mx-auto grid grid-cols-2 sm:grid-cols-4 gap-6 text-center">
           {[
-            { icon: '🚚', title: 'Free Shipping', sub: 'Orders over CHF 79' },
-            { icon: '↩', title: '30-Day Returns', sub: 'No questions asked' },
-            { icon: '🛡', title: 'Swiss Quality', sub: 'Lab tested & certified' },
-            { icon: '💬', title: 'Expert Support', sub: 'Mon–Sat, 9am–6pm' },
+            { icon: '🚚', title: 'Livraison Gratuite', sub: 'Dès CHF 75 d’achat' },
+            { icon: '↩', title: 'Retours sous 14 jours', sub: 'Produits non ouverts' },
+            { icon: '🛡', title: 'Qualité Suisse', sub: 'Certifiée & premium' },
+            { icon: '💬', title: 'Support Expert', sub: '+41 79 250 35 64' },
           ].map(({ icon, title, sub }) => (
             <div key={title}>
               <div className="text-3xl mb-2">{icon}</div>
@@ -84,22 +82,22 @@ export function Footer() {
 
         {/* Newsletter */}
         <div>
-          <h3 className="font-bold text-sm mb-2 tracking-wide text-dark">STAY CONNECTED</h3>
-          <p className="text-xs text-gray-500 mb-4">Get the latest deals and news when you sign up</p>
+          <h3 className="font-bold text-sm mb-2 tracking-wide text-dark">RESTEZ CONNECTÉ</h3>
+          <p className="text-xs text-gray-500 mb-4">Recevez nos offres exclusives en vous inscrivant.</p>
           <form
             onSubmit={(e) => e.preventDefault()}
             className="flex mb-6"
           >
             <input
               type="email"
-              placeholder="Enter your email"
+              placeholder="Votre e-mail"
               className="flex-1 border border-r-0 border-gray-border px-3 py-2.5 text-sm focus:outline-none focus:border-primary"
             />
             <button
               type="submit"
               className="bg-dark text-white px-4 py-2.5 text-xs font-bold tracking-wider hover:bg-dark-2 transition-colors"
             >
-              JOIN
+              REJOINDRE
             </button>
           </form>
 
@@ -112,7 +110,7 @@ export function Footer() {
           </div>
 
           <p className="text-xs text-gray-400">
-            Premium Swiss nutrition supplements since 2018.
+            Compléments alimentaires premium pour sportifs exigeants.
           </p>
         </div>
       </div>
@@ -126,6 +124,8 @@ export function Footer() {
               <a
                 key={s.name}
                 href={s.href}
+                target="_blank"
+                rel="noopener noreferrer"
                 title={s.name}
                 className="w-9 h-9 rounded-full bg-dark text-white flex items-center justify-center text-xs font-bold hover:bg-primary transition-colors"
               >
@@ -136,19 +136,22 @@ export function Footer() {
 
           {/* Legal */}
           <div className="flex flex-wrap justify-center gap-x-4 gap-y-1">
-            {['Privacy Policy', 'Terms & Conditions', 'Cookie Policy', 'Accessibility'].map((item) => (
+            {[
+              { label: 'CGV', href: '/shipping' },
+              { label: 'Confidentialité', href: '/returns' }
+            ].map((item) => (
               <Link
-                key={item}
-                href="#"
+                key={item.label}
+                href={item.href}
                 className="text-xs text-gray-400 hover:text-primary transition-colors"
               >
-                {item}
+                {item.label}
               </Link>
             ))}
           </div>
 
           <p className="text-xs text-gray-400">
-            © {new Date().getFullYear()} NutriFitness Holdings
+            © {new Date().getFullYear()} NutriFitness.ch — Tous droits réservés.
           </p>
         </div>
       </div>

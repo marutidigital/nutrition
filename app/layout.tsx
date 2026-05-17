@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     template: '%s | NutriFitness.ch',
   },
   description:
-    'Premium Swiss nutrition and fitness supplements. Keto, protein, pre-workout and more. Free shipping over CHF 79.',
+    'Premium Swiss nutrition and fitness supplements. Keto, protein, pre-workout and more. Free shipping over CHF 75.',
   keywords: ['supplements', 'protein', 'keto', 'fitness', 'switzerland', 'nutrition'],
   openGraph: {
     title: 'NutriFitness.ch — Premium Swiss Supplements',

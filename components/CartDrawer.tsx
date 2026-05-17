@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useCartStore } from '@/lib/cart'
+import { ShoppingCart, PartyPopper, X } from 'lucide-react'
 
 export function CartDrawer() {
   const { items, isOpen, closeCart, removeItem, updateQuantity, totalPrice, totalItems } = useCartStore()
@@ -54,23 +55,23 @@ export function CartDrawer() {
               </div>
               <button
                 onClick={closeCart}
-                className="w-9 h-9 flex items-center justify-center border border-gray-border hover:border-dark transition-colors text-xl"
+                className="w-9 h-9 flex items-center justify-center border border-gray-border hover:border-dark transition-colors"
               >
-                ×
+                <X size={18} />
               </button>
             </div>
 
             {/* Free shipping bar */}
-            {total > 0 && total < 79 && (
+            {total > 0 && total < 75 && (
               <div className="px-5 py-3 bg-gray-light text-xs text-center">
                 <span className="font-bold text-dark">
-                  CHF {(79 - total).toFixed(2)} away
+                  CHF {(75 - total).toFixed(2)} away
                 </span>{' '}
                 from free shipping!
                 <div className="mt-1.5 h-1.5 bg-gray-border rounded-full overflow-hidden">
                   <div
                     className="h-full bg-primary transition-all duration-300"
-                    style={{ width: `${Math.min((total / 79) * 100, 100)}%` }}
+                    style={{ width: `${Math.min((total / 75) * 100, 100)}%` }}
                   />
                 </div>
               </div>
@@ -79,8 +80,8 @@ export function CartDrawer() {
             {/* Items */}
             <div className="flex-1 overflow-y-auto px-5 py-4 space-y-4">
               {items.length === 0 ? (
-                <div className="flex flex-col items-center justify-center h-full text-center py-16">
-                  <div className="text-6xl mb-4">🛒</div>
+                <div className="flex-1 flex flex-col items-center justify-center text-center p-6 bg-white">
+                  <div className="text-gray-300 mb-4 flex justify-center"><ShoppingCart size={64} strokeWidth={1} /></div>
                   <h3 className="font-display text-2xl text-dark mb-2">YOUR CART IS EMPTY</h3>
                   <p className="text-sm text-gray-400 mb-6">Add some products to get started!</p>
                   <button
@@ -146,16 +147,9 @@ export function CartDrawer() {
                           </button>
                         </div>
 
-                        <div className="flex items-center gap-2">
-                          <span className="font-bold text-sm">
-                            CHF {(item.price * item.quantity).toFixed(2)}
-                          </span>
-                          <button
-                            onClick={() => removeItem(item.product_id, item.flavor ?? undefined)}
-                            className="text-gray-300 hover:text-primary text-lg leading-none transition-colors"
-                          >
-                            ×
-                          </button>
+                        <div className="flex items-center gap-3">
+                          <span className="font-bold text-dark">CHF {(item.price * item.quantity).toFixed(2)}</span>
+                          <button onClick={() => removeItem(item.product_id, item.flavor ?? undefined)} className="text-gray-300 hover:text-primary transition-colors"><X size={18} /></button>
                         </div>
                       </div>
                     </div>
@@ -173,7 +167,7 @@ export function CartDrawer() {
                 </div>
                 <div className="flex justify-between text-xs text-gray-400">
                   <span>Shipping</span>
-                  <span>{total >= 79 ? '🎉 FREE' : 'calculated at checkout'}</span>
+                  <span className="flex items-center gap-1">{total >= 75 ? <><PartyPopper size={14} /> FREE</> : 'calculated at checkout'}</span>
                 </div>
                 <Link
                   href="/checkout"

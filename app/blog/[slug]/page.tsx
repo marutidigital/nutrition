@@ -2,6 +2,7 @@ import { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { BLOG_POSTS } from '../page'
+import { CalendarDays, Clock, PenTool, ArrowRight } from 'lucide-react'
 
 interface PageProps {
   params: { slug: string }
@@ -40,9 +41,9 @@ export default function BlogPostPage({ params }: PageProps) {
           <div className="text-[10px] font-black tracking-widest text-[#c8102e] uppercase mb-2">{post.categoryName}</div>
           <h1 className="font-display text-3xl sm:text-4xl text-white leading-tight">{post.title}</h1>
           <div className="flex items-center gap-4 text-xs text-gray-300 mt-3">
-            <span>📅 {post.date}</span>
-            <span>⏱ {post.readTime} read</span>
-            <span>✍️ NutriFitness Team</span>
+            <span className="flex items-center gap-1.5"><CalendarDays size={14} /> {post.date}</span>
+            <span className="flex items-center gap-1.5"><Clock size={14} /> {post.readTime} read</span>
+            <span className="flex items-center gap-1.5"><PenTool size={14} /> NutriFitness Team</span>
           </div>
         </div>
       </div>
@@ -78,9 +79,9 @@ export default function BlogPostPage({ params }: PageProps) {
                 </div>
                 <Link
                   href={`/products/${post.relatedProduct.slug}`}
-                  className="bg-[#c8102e] text-white px-6 py-3 text-sm font-black tracking-wider hover:bg-[#a50d28] transition-colors whitespace-nowrap"
+                  className="bg-[#c8102e] text-white px-6 py-3 text-sm font-black tracking-wider hover:bg-[#a50d28] transition-colors whitespace-nowrap flex items-center gap-2"
                 >
-                  SHOP NOW →
+                  SHOP NOW <ArrowRight size={16} strokeWidth={3} />
                 </Link>
               </div>
             )}
@@ -127,12 +128,12 @@ export default function BlogPostPage({ params }: PageProps) {
             <div className="bg-[#111] text-white p-6 rounded-sm">
               <div className="text-xs font-black tracking-widest text-[#c8102e] uppercase mb-2">Our Store</div>
               <div className="font-display text-2xl mb-2">Shop Premium Supplements</div>
-              <p className="text-gray-400 text-xs mb-4">Free shipping over CHF 79. 30-day returns.</p>
+              <p className="text-gray-400 text-xs mb-4">Free shipping over CHF 75. 14-day returns.</p>
               <Link
                 href="/products"
-                className="block text-center bg-[#c8102e] text-white px-4 py-3 text-xs font-black tracking-widest hover:bg-[#a50d28] transition-colors"
+                className="flex items-center justify-center gap-2 bg-[#c8102e] text-white px-4 py-3 text-xs font-black tracking-widest hover:bg-[#a50d28] transition-colors"
               >
-                SHOP NOW →
+                SHOP NOW <ArrowRight size={14} strokeWidth={3} />
               </Link>
             </div>
 
@@ -147,8 +148,8 @@ export default function BlogPostPage({ params }: PageProps) {
                     {p.title}
                   </Link>
                 ))}
-                <Link href="/blog" className="block text-xs font-black text-[#c8102e] hover:underline mt-2">
-                  View All Articles →
+                <Link href="/blog" className="flex items-center gap-1 text-xs font-black text-[#c8102e] hover:underline mt-2">
+                  View All Articles <ArrowRight size={12} strokeWidth={3} />
                 </Link>
               </div>
             </div>
