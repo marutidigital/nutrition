@@ -63,7 +63,6 @@ export interface Product {
   rating: number
   review_count: number
   tags: string[] | null
-  sort_order: number
   created_at: string
   updated_at: string
 }
