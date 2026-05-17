@@ -20,7 +20,19 @@ create policy "Users can view own profile" on profiles for select using (auth.ui
 create policy "Users can update own profile" on profiles for update using (auth.uid() = id);
 create policy "Users can insert own profile" on profiles for insert with check (auth.uid() = id);
 create policy "Admin can view all profiles" on profiles for select
-  using (exists (select 1 from profiles p where p.id = auth.uid() and p.role = 'admin'));
+  using (public.is_admin());
+
+
+-- ── Secure Admin Check Function ───────────────────────────────────────
+create or replace function public.is_admin()
+returns boolean as $$
+declare
+  is_admin boolean;
+begin
+  select (role = ''admin'') into is_admin from public.profiles where id = auth.uid();
+  return coalesce(is_admin, false);
+end;
+$$ language plpgsql security definer set search_path = public;
 
 -- ── Banners (Hero Slider) ─────────────────────────────────────────────
 create table if not exists banners (
@@ -43,7 +55,7 @@ create table if not exists banners (
 alter table banners enable row level security;
 create policy "Public read banners" on banners for select using (true);
 create policy "Admin manage banners" on banners for all
-  using (exists (select 1 from profiles where id = auth.uid() and role = 'admin'));
+  using (public.is_admin());
 
 -- ── Promo Bar ─────────────────────────────────────────────────────────
 create table if not exists promo_messages (
@@ -58,7 +70,7 @@ create table if not exists promo_messages (
 alter table promo_messages enable row level security;
 create policy "Public read promo" on promo_messages for select using (true);
 create policy "Admin manage promo" on promo_messages for all
-  using (exists (select 1 from profiles where id = auth.uid() and role = 'admin'));
+  using (public.is_admin());
 
 -- ── Categories ────────────────────────────────────────────────────────
 create table if not exists categories (
@@ -76,7 +88,7 @@ create table if not exists categories (
 alter table categories enable row level security;
 create policy "Public read categories" on categories for select using (true);
 create policy "Admin manage categories" on categories for all
-  using (exists (select 1 from profiles where id = auth.uid() and role = 'admin'));
+  using (public.is_admin());
 
 -- ── Products ──────────────────────────────────────────────────────────
 create table if not exists products (
@@ -111,7 +123,7 @@ create table if not exists products (
 alter table products enable row level security;
 create policy "Public read products" on products for select using (true);
 create policy "Admin manage products" on products for all
-  using (exists (select 1 from profiles where id = auth.uid() and role = 'admin'));
+  using (public.is_admin());
 
 -- ── Offers ────────────────────────────────────────────────────────────
 create table if not exists offers (
@@ -130,7 +142,7 @@ create table if not exists offers (
 alter table offers enable row level security;
 create policy "Public read offers" on offers for select using (true);
 create policy "Admin manage offers" on offers for all
-  using (exists (select 1 from profiles where id = auth.uid() and role = 'admin'));
+  using (public.is_admin());
 
 -- ── Orders ────────────────────────────────────────────────────────────
 create table if not exists orders (
@@ -153,9 +165,9 @@ alter table orders enable row level security;
 create policy "Users can view own orders" on orders for select using (auth.uid() = user_id);
 create policy "Users can create orders" on orders for insert with check (auth.uid() = user_id);
 create policy "Admin can view all orders" on orders for select
-  using (exists (select 1 from profiles where id = auth.uid() and role = 'admin'));
+  using (public.is_admin());
 create policy "Admin can update orders" on orders for update
-  using (exists (select 1 from profiles where id = auth.uid() and role = 'admin'));
+  using (public.is_admin());
 
 -- ── Wishlist ──────────────────────────────────────────────────────────
 create table if not exists wishlist (
