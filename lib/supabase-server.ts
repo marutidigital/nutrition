@@ -5,8 +5,8 @@ export function createServerSupabaseClient() {
   const cookieStore = cookies()
 
   return createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://undefined.supabase.co',
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'undefined_key',
     {
       cookies: {
         get(name: string) {
@@ -34,8 +34,8 @@ export function createServerSupabaseClient() {
 export function createAdminClient() {
   const { createClient } = require('@supabase/supabase-js')
   return createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY!,
+    process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://undefined.supabase.co',
+    process.env.SUPABASE_SERVICE_ROLE_KEY || 'undefined_key',
     { auth: { autoRefreshToken: false, persistSession: false } }
   )
 }
