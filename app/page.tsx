@@ -29,9 +29,21 @@ async function getData() {
       featured = (fallback.data ?? []) as Product[]
     }
 
+    let categories = (categoriesResult.data ?? []) as Category[]
+    if (categories.length === 0) {
+      categories = [
+        { id: '1', name: 'Proteins', slug: 'Proteins' } as Category,
+        { id: '2', name: 'Pre Workout', slug: 'Pre Workout' } as Category,
+        { id: '3', name: 'Creatine', slug: 'CREATINE' } as Category,
+        { id: '4', name: 'Vitamins', slug: 'Vitamins & Minerals' } as Category,
+        { id: '5', name: 'Weight Loss', slug: 'Weight Loss' } as Category,
+        { id: '6', name: 'Snacks', slug: 'SNACKS' } as Category,
+      ]
+    }
+
     return {
       banners: (bannersResult.data ?? []) as Banner[],
-      categories: (categoriesResult.data ?? []) as Category[],
+      categories,
       featured,
       newProducts: (newResult.data ?? []) as Product[],
     }

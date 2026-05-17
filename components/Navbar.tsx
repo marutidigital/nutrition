@@ -38,13 +38,13 @@ export function Navbar() {
   }, [])
 
   const subNavLinks = [
-    { label: 'SHOP', href: '/products' },
-    { label: 'BLOG', href: '/blog' },
-    { label: 'DEALS', href: '/products?badge=sale', red: true },
-    { label: 'BEST SELLERS', href: '/products?sort=rating' },
-    { label: 'NEW ON THE DROP', href: '/products?new=true' },
-    { label: 'CREATINE', href: '/products?q=creatine' },
-    { label: 'LAST CHANCE', href: '/products?badge=clearance', red: true },
+    { label: 'ALL PRODUCTS', href: '/products' },
+    { label: 'PROTEINS', href: '/products?category=Proteins' },
+    { label: 'PRE-WORKOUT', href: '/products?category=Pre Workout' },
+    { label: 'CREATINE', href: '/products?category=CREATINE' },
+    { label: 'SNACKS', href: '/products?category=SNACKS' },
+    { label: 'VITAMINS', href: '/products?category=Vitamins & Minerals' },
+    { label: 'WEIGHT LOSS', href: '/products?category=Weight Loss' },
   ]
 
   return (
