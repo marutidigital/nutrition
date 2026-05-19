@@ -7,6 +7,8 @@ import { useCartStore } from '@/lib/cart'
 import { supabase } from '@/lib/supabase'
 import toast from 'react-hot-toast'
 import type { Product } from '@/lib/types'
+import { useLanguageStore } from '@/store/useLanguageStore'
+import { translations } from '@/lib/i18n/translations'
 
 interface ProductCardProps {
   product: Product
@@ -34,6 +36,8 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
   const [liked, setLiked] = useState(false)
   const [addingToCart, setAddingToCart] = useState(false)
   const { addItem } = useCartStore()
+  const { language } = useLanguageStore()
+  const t = translations[language]
 
   const discount = product.price_original
     ? Math.round((1 - product.price / product.price_original) * 100)
@@ -109,12 +113,12 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
           )}
           {discount && !product.badge_text && (
             <span className="bg-primary text-white text-[9px] font-bold px-2 py-0.5 rounded uppercase tracking-wider shadow-sm">
-              -{discount}% OFF
+              -{discount}% {t.product.sale}
             </span>
           )}
           {product.is_new && (
             <span className="bg-dark text-white text-[9px] font-bold px-2 py-0.5 rounded uppercase tracking-wider shadow-sm">
-              NEW
+              {t.product.new}
             </span>
           )}
         </div>
@@ -132,8 +136,8 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
         {/* Out of stock overlay */}
         {!product.in_stock && (
           <div className="absolute inset-0 bg-white/60 backdrop-blur-[2px] flex items-center justify-center z-10">
-            <span className="bg-dark text-white text-xs font-bold px-4 py-2 rounded-sm tracking-widest shadow-lg">
-              OUT OF STOCK
+            <span className="bg-dark text-white text-xs font-bold px-4 py-2 rounded-sm tracking-widest shadow-lg uppercase">
+              {t.product.outOfStock}
             </span>
           </div>
         )}

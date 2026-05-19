@@ -7,6 +7,9 @@ import { supabase } from '@/lib/supabase'
 import type { User } from '@supabase/supabase-js'
 import type { Profile } from '@/lib/types'
 import { Menu, X, Search, User as UserIcon, ShoppingCart, Settings } from 'lucide-react'
+import { LanguageToggle } from './LanguageToggle'
+import { useLanguageStore } from '@/store/useLanguageStore'
+import { translations } from '@/lib/i18n/translations'
 
 export function Navbar() {
   const [user, setUser] = useState<User | null>(null)
@@ -14,8 +17,15 @@ export function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
   const [proOpen, setProOpen] = useState(false)
+  const [isMounted, setIsMounted] = useState(false)
   const { totalItems, openCart } = useCartStore()
   const itemCount = totalItems()
+  const { language } = useLanguageStore()
+  const t = translations[language]
+
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
 
   useEffect(() => {
     const getUser = async () => {
@@ -40,14 +50,14 @@ export function Navbar() {
   }, [])
 
   const subNavLinks = [
-    { label: 'ALL PRODUCTS', href: '/products' },
-    { label: 'BLOG', href: '/blog' },
-    { label: 'PROTEINS', href: '/products?category=Proteins' },
-    { label: 'PRE-WORKOUT', href: '/products?category=Pre Workout' },
-    { label: 'CREATINE', href: '/products?category=CREATINE' },
-    { label: 'SNACKS', href: '/products?category=SNACKS' },
-    { label: 'VITAMINS', href: '/products?category=Vitamins & Minerals' },
-    { label: 'WEIGHT LOSS', href: '/products?category=Weight Loss' },
+    { label: t.nav.allProducts, href: '/products' },
+    { label: t.nav.blog, href: '/blog' },
+    { label: t.nav.proteins, href: '/products?category=Proteins' },
+    { label: t.nav.preWorkout, href: '/products?category=Pre Workout' },
+    { label: t.nav.creatine, href: '/products?category=CREATINE' },
+    { label: t.nav.snacks, href: '/products?category=SNACKS' },
+    { label: t.nav.vitamins, href: '/products?category=Vitamins & Minerals' },
+    { label: t.nav.weightLoss, href: '/products?category=Weight Loss' },
   ]
 
   return (
@@ -56,10 +66,12 @@ export function Navbar() {
       <div className="bg-[#F4F4F4] text-[#555555] border-b border-gray-200 py-1.5 px-4 text-[11px] font-medium tracking-wide">
         <div className="max-w-[1400px] mx-auto flex justify-between items-center">
           <div className="flex gap-4">
-            <Link href="/contact" className="hover:underline">Find a Store</Link>
+            <Link href="/contact" className="hover:underline">
+              {isMounted ? t.nav.findStore : 'Trouver un magasin'}
+            </Link>
           </div>
           <div className="hidden md:block font-bold text-dark uppercase tracking-widest">
-            Buy 1, Get 1 50% Off!
+            {isMounted ? t.promo.bogo : 'Achetez-en 1, obtenez 1 à -50% !'}
           </div>
           <div className="flex items-center gap-1">
             <span className="text-amber-500 text-sm">★</span>
@@ -67,7 +79,7 @@ export function Navbar() {
               onClick={() => setProOpen(true)}
               className="font-bold hover:underline uppercase text-dark"
             >
-              Make Me a PRO Access Member
+              {isMounted ? t.promo.proMember : 'DEVENEZ MEMBRE PRO'}
             </button>
           </div>
         </div>
@@ -97,7 +109,7 @@ export function Navbar() {
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="What can we help you find today?"
+              placeholder={isMounted ? t.nav.search : 'Rechercher des produits...'}
               className="w-full border-2 border-gray-200 hover:border-gray-400 focus:border-dark px-4 py-2.5 rounded-sm text-sm focus:outline-none transition-colors pr-10"
             />
             <button type="submit" className="absolute right-3 text-gray-500 hover:text-dark transition-colors">
@@ -132,6 +144,8 @@ export function Navbar() {
                 </span>
               )}
             </button>
+
+            <LanguageToggle />
 
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
@@ -172,7 +186,7 @@ export function Navbar() {
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Search products..."
+                  placeholder={isMounted ? t.nav.search : 'Rechercher des produits...'}
                   className="w-full border border-gray-300 px-3 py-2 text-sm rounded-sm focus:outline-none"
                 />
                 <button type="submit" className="absolute right-3 text-gray-500"><Search size={20} /></button>
@@ -192,7 +206,7 @@ export function Navbar() {
                 onClick={() => setMobileOpen(false)}
                 className="flex items-center gap-2 py-2.5 text-xs font-black tracking-widest text-dark mt-2 border-t border-gray-200"
               >
-                <UserIcon size={16} /> {user ? 'MY ACCOUNT' : 'SIGN IN / REGISTER'}
+                <UserIcon size={16} /> {isMounted ? (user ? t.nav.myAccount : t.nav.signIn) : (user ? 'MON COMPTE' : 'CONNEXION / INSCRIPTION')}
               </Link>
             </div>
           </div>
@@ -202,9 +216,15 @@ export function Navbar() {
       {/* Tier 4: Promo Bar */}
       <div className="bg-[#000000] text-white py-2 px-4 text-[10px] font-black tracking-widest uppercase border-b border-gray-800">
         <div className="max-w-[1400px] mx-auto grid grid-cols-1 md:grid-cols-3 gap-2 text-center items-center">
-          <div className="hover:text-primary transition-colors cursor-pointer">Buy 1, Get 1 50% Off!</div>
-          <div className="hidden md:block border-x border-gray-700 px-4 hover:text-primary transition-colors cursor-pointer">Free Shipping Over CHF 75</div>
-          <div className="hidden md:block hover:text-primary transition-colors cursor-pointer">Save 10% When You Pick Up In-Store!</div>
+          <div className="hover:text-primary transition-colors cursor-pointer">
+            {isMounted ? t.promo.bogo : 'Achetez-en 1, obtenez 1 à -50% !'}
+          </div>
+          <div className="hidden md:block border-x border-gray-700 px-4 hover:text-primary transition-colors cursor-pointer">
+            {isMounted ? t.promo.freeShipping : 'Livraison gratuite dès CHF 75'}
+          </div>
+          <div className="hidden md:block hover:text-primary transition-colors cursor-pointer">
+            {isMounted ? t.promo.pickupDiscount : 'Économisez 10% en retrait en magasin !'}
+          </div>
         </div>
       </div>
 
@@ -221,7 +241,9 @@ export function Navbar() {
           <div className="fixed top-0 right-0 h-full w-full max-w-[440px] bg-white z-[70] shadow-2xl flex flex-col overflow-y-auto animate-slide-in-right">
             {/* Header */}
             <div className="flex items-center justify-between p-6 border-b border-gray-100">
-              <h2 className="font-display text-3xl font-black tracking-wide">SIGN UP FOR PRO</h2>
+              <h2 className="font-display text-3xl font-black tracking-wide">
+                {isMounted ? t.pro.title : 'INSCRIVEZ-VOUS AU PRO'}
+              </h2>
               <button
                 onClick={() => setProOpen(false)}
                 className="w-9 h-9 flex items-center justify-center hover:bg-gray-100 rounded-full transition-colors"
@@ -237,7 +259,7 @@ export function Navbar() {
                 onClick={() => setProOpen(false)}
                 className="block text-center bg-dark text-white font-black tracking-widest py-4 text-sm hover:bg-gray-800 transition-colors uppercase"
               >
-                ADD PRO ACCESS FOR CHF 39.99
+                {isMounted ? t.pro.addCta : 'ACCÈS PRO POUR CHF 39.99'}
               </Link>
             </div>
 
@@ -253,14 +275,11 @@ export function Navbar() {
                 </div>
               </div>
               <div>
-                <div className="text-xs font-black mb-2 text-gray-300 uppercase tracking-widest">IT PAYS TO GO PRO.</div>
+                <div className="text-xs font-black mb-2 text-gray-300 uppercase tracking-widest">
+                  {isMounted ? t.pro.paysToPro : 'ÇA PAIE D\'ÊTRE PRO.'}
+                </div>
                 <ul className="space-y-1.5">
-                  {[
-                    'BOGO 50% Off Almost EVERYTHING the 1st - 7th of every month',
-                    '15% Cash Back Rewards with Pick-A-Day offers to end each month',
-                    '10% Cash Back Rewards on every purchase',
-                    'Save on every order with FREE Shipping',
-                  ].map((item) => (
+                  {(isMounted ? t.pro.benefits : translations.fr.pro.benefits).map((item) => (
                     <li key={item} className="text-[11px] text-gray-300 flex gap-1.5">
                       <span className="text-[#c8102e] font-bold flex-shrink-0">•</span>
                       {item}
@@ -268,7 +287,7 @@ export function Navbar() {
                   ))}
                 </ul>
                 <Link href="/about" onClick={() => setProOpen(false)} className="text-xs font-black underline mt-3 block hover:text-gray-300 transition-colors">
-                  LEARN MORE
+                  {isMounted ? t.pro.learnMore : 'EN SAVOIR PLUS'}
                 </Link>
               </div>
             </div>
@@ -276,10 +295,10 @@ export function Navbar() {
             {/* Benefits list */}
             <div className="mx-6 space-y-0">
               {[
-                { title: 'BOGO 50% Off Almost EVERYTHING', sub: 'the 1st - 7th of every month', color: '#c8102e' },
-                { title: '15% Cash Back', sub: 'Rewards with Pick-A-Day Offers to end each month', color: '#c8102e' },
-                { title: '10% Cash Back', sub: 'Rewards on every purchase*', color: '#c8102e' },
-                { title: 'FREE Shipping', sub: 'Save on every order automatically', color: '#c8102e' },
+                { title: isMounted ? (language === 'fr' ? 'BOGO -50% sur presque TOUT' : 'BOGO 50% Off Almost EVERYTHING') : 'BOGO -50% sur presque TOUT', sub: isMounted ? (language === 'fr' ? 'du 1er au 7 de chaque mois' : 'the 1st - 7th of every month') : 'du 1er au 7 de chaque mois', color: '#c8102e' },
+                { title: isMounted ? (language === 'fr' ? '15% de cashback' : '15% Cash Back') : '15% de cashback', sub: isMounted ? (language === 'fr' ? 'Offres Pick-A-Day en fin de mois' : 'Rewards with Pick-A-Day Offers') : 'Offres Pick-A-Day en fin de mois', color: '#c8102e' },
+                { title: isMounted ? (language === 'fr' ? '10% de cashback' : '10% Cash Back') : '10% de cashback', sub: isMounted ? (language === 'fr' ? 'Sur chaque achat' : 'Rewards on every purchase*') : 'Sur chaque achat', color: '#c8102e' },
+                { title: isMounted ? (language === 'fr' ? 'Livraison GRATUITE' : 'FREE Shipping') : 'Livraison GRATUITE', sub: isMounted ? (language === 'fr' ? 'Sur chaque commande automatiquement' : 'Save on every order automatically') : 'Sur chaque commande automatiquement', color: '#c8102e' },
               ].map((item, i) => (
                 <div key={i} className="py-4 border-b border-gray-100">
                   <div className="text-sm">
@@ -292,9 +311,9 @@ export function Navbar() {
 
             {/* Sign in */}
             <div className="p-6 text-sm text-gray-500 text-center">
-              Already a Member?{' '}
+              {isMounted ? t.pro.alreadyMember : 'Déjà membre ?'}{' '}
               <Link href="/auth/login" onClick={() => setProOpen(false)} className="font-black text-dark underline hover:text-primary">
-                Sign In
+                {isMounted ? t.pro.signIn : 'Connexion'}
               </Link>
             </div>
 
@@ -305,7 +324,7 @@ export function Navbar() {
                 onClick={() => setProOpen(false)}
                 className="block text-center bg-dark text-white font-black tracking-widest py-4 text-sm hover:bg-gray-800 transition-colors uppercase"
               >
-                ADD PRO ACCESS FOR CHF 39.99
+                {isMounted ? t.pro.addCta : 'ACCÈS PRO POUR CHF 39.99'}
               </Link>
             </div>
           </div>

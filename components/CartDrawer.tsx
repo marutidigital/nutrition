@@ -6,8 +6,12 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useCartStore } from '@/lib/cart'
 import { ShoppingCart, PartyPopper, X } from 'lucide-react'
+import { useLanguageStore } from '@/store/useLanguageStore'
+import { translations } from '@/lib/i18n/translations'
 
 export function CartDrawer() {
+  const { language } = useLanguageStore()
+  const t = translations[language]
   const { items, isOpen, closeCart, removeItem, updateQuantity, totalPrice, totalItems } = useCartStore()
   const drawerRef = useRef<HTMLDivElement>(null)
 
@@ -50,7 +54,7 @@ export function CartDrawer() {
             {/* Header */}
             <div className="flex items-center justify-between px-5 py-4 border-b border-gray-border">
               <div>
-                <h2 className="font-display text-2xl text-dark">YOUR CART</h2>
+                <h2 className="font-display text-2xl text-dark uppercase">{t.cart.title}</h2>
                 <p className="text-xs text-gray-400">{count} item{count !== 1 ? 's' : ''}</p>
               </div>
               <button
@@ -65,9 +69,9 @@ export function CartDrawer() {
             {total > 0 && total < 75 && (
               <div className="px-5 py-3 bg-gray-light text-xs text-center">
                 <span className="font-bold text-dark">
-                  CHF {(75 - total).toFixed(2)} away
+                  CHF {(75 - total).toFixed(2)}
                 </span>{' '}
-                from free shipping!
+                {t.cart.freeShippingAway}
                 <div className="mt-1.5 h-1.5 bg-gray-border rounded-full overflow-hidden">
                   <div
                     className="h-full bg-primary transition-all duration-300"
@@ -82,13 +86,13 @@ export function CartDrawer() {
               {items.length === 0 ? (
                 <div className="flex-1 flex flex-col items-center justify-center text-center p-6 bg-white">
                   <div className="text-gray-300 mb-4 flex justify-center"><ShoppingCart size={64} strokeWidth={1} /></div>
-                  <h3 className="font-display text-2xl text-dark mb-2">YOUR CART IS EMPTY</h3>
-                  <p className="text-sm text-gray-400 mb-6">Add some products to get started!</p>
+                  <h3 className="font-display text-2xl text-dark mb-2 uppercase">{t.cart.empty}</h3>
+                  <p className="text-sm text-gray-400 mb-6">{t.cart.startShopping}</p>
                   <button
                     onClick={closeCart}
-                    className="bg-primary text-white px-8 py-3 text-sm font-bold tracking-wider hover:bg-primary-dark transition-colors"
+                    className="bg-primary text-white px-8 py-3 text-sm font-bold tracking-wider hover:bg-primary-dark transition-colors uppercase"
                   >
-                    SHOP NOW
+                    {t.home.shopNow}
                   </button>
                 </div>
               ) : (
@@ -162,26 +166,26 @@ export function CartDrawer() {
             {items.length > 0 && (
               <div className="border-t border-gray-border px-5 py-5 space-y-3">
                 <div className="flex justify-between text-sm">
-                  <span className="text-gray-500">Subtotal</span>
+                  <span className="text-gray-500">{t.cart.subtotal}</span>
                   <span className="font-bold text-dark">CHF {total.toFixed(2)}</span>
                 </div>
                 <div className="flex justify-between text-xs text-gray-400">
-                  <span>Shipping</span>
-                  <span className="flex items-center gap-1">{total >= 75 ? <><PartyPopper size={14} /> FREE</> : 'calculated at checkout'}</span>
+                  <span>{t.cart.shippingLabel}</span>
+                  <span className="flex items-center gap-1">{total >= 75 ? <><PartyPopper size={14} /> {t.cart.free}</> : t.cart.shipping}</span>
                 </div>
                 <Link
                   href="/checkout"
                   onClick={closeCart}
-                  className="block w-full bg-primary text-white text-center py-4 font-bold tracking-wider text-sm hover:bg-primary-dark transition-colors"
+                  className="block w-full bg-primary text-white text-center py-4 font-bold tracking-wider text-sm hover:bg-primary-dark transition-colors uppercase"
                 >
-                  PROCEED TO CHECKOUT — CHF {total.toFixed(2)}
+                  {t.cart.checkout} — CHF {total.toFixed(2)}
                 </Link>
                 <Link
                   href="/products"
                   onClick={closeCart}
-                  className="block w-full bg-white text-dark border-[1.5px] border-dark text-center py-3 font-bold tracking-wider text-sm hover:bg-gray-light transition-colors"
+                  className="block w-full bg-white text-dark border-[1.5px] border-dark text-center py-3 font-bold tracking-wider text-sm hover:bg-gray-light transition-colors uppercase"
                 >
-                  CONTINUE SHOPPING
+                  {t.cart.continue}
                 </Link>
               </div>
             )}
