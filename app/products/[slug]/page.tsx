@@ -3,7 +3,6 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { createServerSupabaseClient } from '@/lib/supabase-server'
 import { ProductDetailClient } from '@/components/ProductDetailClient'
-import { ProductCard } from '@/components/ProductCard'
 import type { Product } from '@/lib/types'
 
 interface PageProps {
