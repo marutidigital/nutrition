@@ -14,6 +14,7 @@ export default function POSPage() {
   const [loading, setLoading] = useState(true)
   const [showInvoice, setShowInvoice] = useState(false)
   const [invoiceData, setInvoiceData] = useState<any>(null)
+  const [paymentMethod, setPaymentMethod] = useState('Cash')
   
   const searchInputRef = useRef<HTMLInputElement>(null)
 
@@ -108,9 +109,11 @@ export default function POSPage() {
         sku: c.product.sku
       })),
       subtotal,
+      shipping_cost: 0,
       total,
       status: 'delivered', // POS orders are instantly delivered
-      notes: 'POS Sale'
+      notes: `POS Sale | Payment: ${paymentMethod}`,
+      user_id: null,
     }
 
     // Process order in db
@@ -276,6 +279,25 @@ export default function POSPage() {
             <span>CHF {total.toFixed(2)}</span>
           </div>
           
+          <div className="pt-3">
+            <label className="block text-xs font-bold text-gray-500 uppercase mb-1.5">Payment Method</label>
+            <div className="grid grid-cols-3 gap-2">
+              {['Cash', 'Card', 'Bank Transfer'].map(method => (
+                <button
+                  key={method}
+                  onClick={() => setPaymentMethod(method)}
+                  className={`py-2 text-xs font-bold rounded-lg transition-colors border ${
+                    paymentMethod === method
+                      ? 'bg-dark text-white border-dark'
+                      : 'bg-white text-gray-600 border-gray-300 hover:border-gray-400'
+                  }`}
+                >
+                  {method === 'Bank Transfer' ? 'Bank' : method}
+                </button>
+              ))}
+            </div>
+          </div>
+          
           <button 
             onClick={handleCheckout}
             disabled={cart.length === 0}
@@ -298,6 +320,7 @@ export default function POSPage() {
                 <div className="mt-4 text-sm space-y-1 text-gray-600">
                   <p>Order: {invoiceData.order_number}</p>
                   <p>Date: {invoiceData.date}</p>
+                  <p className="font-semibold text-dark">Payment: {paymentMethod}</p>
                 </div>
               </div>
 
