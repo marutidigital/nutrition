@@ -35,6 +35,18 @@ create table if not exists banners (
   updated_at timestamptz default now()
 );
 
+-- Homepage Showcase (Video / Image Category features)
+create table if not exists homepage_showcase (
+  id uuid primary key default gen_random_uuid(),
+  title text not null,
+  category_slug text not null,
+  media_url text not null,
+  media_type text not null default 'video' check (media_type in ('video', 'image')),
+  sort_order integer default 0,
+  is_active boolean default true,
+  created_at timestamptz default now()
+);
+
 -- Promo Bar
 create table if not exists promo_messages (
   id uuid primary key default gen_random_uuid(),
@@ -179,6 +191,11 @@ create policy "Admin can view all profiles" on profiles for select using (public
 alter table banners enable row level security;
 create policy "Public read banners" on banners for select using (true);
 create policy "Admin manage banners" on banners for all using (public.is_admin());
+
+-- Homepage Showcase Policies
+alter table homepage_showcase enable row level security;
+create policy "Public read showcase" on homepage_showcase for select using (true);
+create policy "Admin manage showcase" on homepage_showcase for all using (public.is_admin());
 
 -- Promo Messages Policies
 alter table promo_messages enable row level security;

@@ -1,7 +1,7 @@
 import { Metadata } from 'next'
 import { createServerSupabaseClient } from '@/lib/supabase-server'
 import { HomePageUI } from '@/components/HomePageUI'
-import type { Product } from '@/lib/types'
+import type { Product, HomepageShowcase } from '@/lib/types'
 
 export const metadata: Metadata = {
   title: 'Nutrition — Compléments Suisses Premium',
@@ -15,9 +15,10 @@ async function getData() {
   try {
     const supabase = createServerSupabaseClient()
 
-    const [featuredResult, newResult] = await Promise.all([
+    const [featuredResult, newResult, showcaseResult] = await Promise.all([
       supabase.from('products').select('*').eq('is_featured', true).eq('in_stock', true).limit(16),
       supabase.from('products').select('*').eq('is_new', true).eq('in_stock', true).limit(4),
+      supabase.from('homepage_showcase').select('*').eq('is_active', true).order('sort_order', { ascending: true }),
     ])
 
     let featured = (featuredResult.data ?? []) as Product[]
@@ -32,15 +33,17 @@ async function getData() {
       newProducts = (fallback.data ?? []) as Product[]
     }
 
-    return { featured, newProducts }
+    const showcase = (showcaseResult.data ?? []) as HomepageShowcase[]
+
+    return { featured, newProducts, showcase }
   } catch (error) {
     console.error('SERVER FETCH ERROR IN app/page.tsx:', error)
-    return { featured: [], newProducts: [] }
+    return { featured: [], newProducts: [], showcase: [] }
   }
 }
 
 export default async function HomePage() {
-  const { featured, newProducts } = await getData()
+  const { featured, newProducts, showcase } = await getData()
 
-  return <HomePageUI featured={featured} newProducts={newProducts} />
+  return <HomePageUI featured={featured} newProducts={newProducts} showcase={showcase} />
 }

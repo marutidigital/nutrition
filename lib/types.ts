@@ -26,6 +26,17 @@ export interface PromoMessage {
   created_at: string
 }
 
+export interface HomepageShowcase {
+  id: string
+  title: string
+  category_slug: string
+  media_url: string
+  media_type: 'video' | 'image'
+  sort_order: number
+  is_active: boolean
+  created_at: string
+}
+
 export interface Category {
   id: string
   name: string

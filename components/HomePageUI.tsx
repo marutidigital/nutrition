@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { ProductCard } from '@/components/ProductCard'
 import { HeroSlider } from '@/components/HeroSlider'
-import type { Product } from '@/lib/types'
+import type { Product, HomepageShowcase } from '@/lib/types'
 import { useLanguageStore } from '@/store/useLanguageStore'
 import { translations } from '@/lib/i18n/translations'
 import { Dumbbell, Zap, Flame, Milk, Scale, Leaf, TrendingUp, Cookie, LeafyGreen, Fish, RotateCw } from 'lucide-react'
@@ -12,6 +12,7 @@ import { Dumbbell, Zap, Flame, Milk, Scale, Leaf, TrendingUp, Cookie, LeafyGreen
 interface HomePageUIProps {
   featured: Product[]
   newProducts: Product[]
+  showcase: HomepageShowcase[]
 }
 
 const CATEGORY_ICONS = [
@@ -29,7 +30,60 @@ const CATEGORY_ICONS = [
   <Zap size={24} />,
 ]
 
-export function HomePageUI({ featured, newProducts }: HomePageUIProps) {
+const FALLBACK_SHOWCASE: HomepageShowcase[] = [
+  {
+    id: 'f1',
+    title: 'Whey Proteins',
+    category_slug: 'Proteins',
+    media_url: 'https://assets.mixkit.co/videos/preview/mixkit-athlete-muscular-back-in-gym-4889-large.mp4',
+    media_type: 'video',
+    sort_order: 1,
+    is_active: true,
+    created_at: '',
+  },
+  {
+    id: 'f2',
+    title: 'Pre-Workout',
+    category_slug: 'Pre Workout',
+    media_url: 'https://assets.mixkit.co/videos/preview/mixkit-man-doing-dumbbell-workout-34289-large.mp4',
+    media_type: 'video',
+    sort_order: 2,
+    is_active: true,
+    created_at: '',
+  },
+  {
+    id: 'f3',
+    title: 'Pure Creatine',
+    category_slug: 'CREATINE',
+    media_url: 'https://assets.mixkit.co/videos/preview/mixkit-man-training-in-the-gym-39875-large.mp4',
+    media_type: 'video',
+    sort_order: 3,
+    is_active: true,
+    created_at: '',
+  },
+  {
+    id: 'f4',
+    title: 'Shakers & Gear',
+    category_slug: 'Accessories',
+    media_url: 'https://assets.mixkit.co/videos/preview/mixkit-close-up-of-a-man-drinking-from-a-shaker-43183-large.mp4',
+    media_type: 'video',
+    sort_order: 4,
+    is_active: true,
+    created_at: '',
+  },
+  {
+    id: 'f5',
+    title: 'Recovery & Health',
+    category_slug: 'ÉNERGIE - RÉCUPÉRATION',
+    media_url: 'https://assets.mixkit.co/videos/preview/mixkit-young-woman-doing-squats-with-barbell-in-gym-39881-large.mp4',
+    media_type: 'video',
+    sort_order: 5,
+    is_active: true,
+    created_at: '',
+  }
+]
+
+export function HomePageUI({ featured, newProducts, showcase }: HomePageUIProps) {
   const { language } = useLanguageStore()
   const [isMounted, setIsMounted] = useState(false)
 
@@ -41,6 +95,7 @@ export function HomePageUI({ featured, newProducts }: HomePageUIProps) {
 
   const availableFeatured = featured.filter((p) => p.in_stock)
   const availableNew = newProducts.filter((p) => p.in_stock)
+  const activeShowcase = showcase && showcase.length > 0 ? showcase : FALLBACK_SHOWCASE
 
   const HARDCODED_CATEGORIES = [
     { id: '1',  slug: 'Proteins',                  name: { fr: 'Protéines',        en: 'Proteins' } },
@@ -113,28 +168,61 @@ export function HomePageUI({ featured, newProducts }: HomePageUIProps) {
         </section>
       )}
 
-      {/* ── Category Grid Section ── */}
-      <section className="bg-gray-50 py-12 px-4">
+      {/* ── Category Video Showcase ── */}
+      <section className="bg-white py-16 px-4 border-b border-gray-100">
         <div className="max-w-[1400px] mx-auto">
-          <div className="text-center mb-8">
-            <h2 className="font-display font-black text-4xl text-dark tracking-wide uppercase">
-              {t.home.shopByCategory}
+          <div className="text-center mb-10">
+            <div className="text-xs font-bold tracking-[3px] text-gray-400 uppercase mb-2">
+              {t.home.shopByCategory || 'EXPLORE OUR LINE'}
+            </div>
+            <h2 className="font-display font-black text-4xl sm:text-5xl text-[#c8102e] tracking-wide uppercase">
+              {language === 'fr' ? 'CATÉGORIES PREMIUM' : 'PREMIUM CATEGORIES'}
             </h2>
-            <div className="w-16 h-1 bg-[#c8102e] mx-auto mt-2" />
+            <div className="w-16 h-1 bg-[#c8102e] mx-auto mt-3" />
           </div>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
-            {HARDCODED_CATEGORIES.slice(0, 12).map((cat, i) => (
-              <Link
-                key={cat.id}
-                href={`/products?category=${encodeURIComponent(cat.slug)}`}
-                className="group flex flex-col items-center justify-center gap-2 bg-white border-2 border-gray-100 hover:border-[#c8102e] p-5 rounded-sm transition-all hover:-translate-y-1 hover:shadow-md"
-              >
-                <div className="text-3xl">{CATEGORY_ICONS[i]}</div>
-                <div className="text-[11px] font-black tracking-widest text-dark uppercase text-center group-hover:text-[#c8102e] transition-colors leading-tight">
-                  {cat.name[lang as 'fr' | 'en']}
-                </div>
-              </Link>
-            ))}
+          
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+            {activeShowcase.map((item) => {
+              const isVideo = item.media_type === 'video' || item.media_url.match(/\.(mp4|webm|ogg)/i)
+              return (
+                <Link
+                  key={item.id}
+                  href={`/products?category=${encodeURIComponent(item.category_slug)}`}
+                  className="group relative h-[360px] w-full overflow-hidden rounded-sm shadow-sm hover:shadow-xl transition-all duration-500 bg-black flex flex-col justify-end p-6 border border-gray-900"
+                >
+                  {/* Media background */}
+                  {isVideo ? (
+                    <video
+                      src={item.media_url}
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                      className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:opacity-85 group-hover:scale-105 transition-all duration-700"
+                    />
+                  ) : (
+                    <img
+                      src={item.media_url}
+                      alt={item.title}
+                      className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:opacity-85 group-hover:scale-105 transition-all duration-700"
+                    />
+                  )}
+                  
+                  {/* Premium overlay gradient */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent opacity-80 group-hover:opacity-70 transition-opacity duration-500" />
+                  
+                  {/* Text contents */}
+                  <div className="relative z-10 w-full flex flex-col items-center text-center">
+                    <h3 className="font-display font-black text-2xl text-white uppercase tracking-wider leading-none mb-1 group-hover:text-primary transition-colors">
+                      {item.title}
+                    </h3>
+                    <span className="text-gray-400 text-[10px] font-bold tracking-[2px] uppercase opacity-75 group-hover:opacity-100 transition-opacity">
+                      {language === 'fr' ? 'DÉCOUVRIR' : 'EXPLORE'} →
+                    </span>
+                  </div>
+                </Link>
+              )
+            })}
           </div>
         </div>
       </section>
