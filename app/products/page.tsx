@@ -6,7 +6,7 @@ import type { Product } from '@/lib/types'
 
 export const metadata: Metadata = {
   title: 'All Products',
-  description: 'Browse all NutriFitness.ch supplements — protein, pre-workout, keto, vitamins and more.',
+  description: 'Browse all Nutrition supplements — protein, pre-workout, keto, vitamins and more.',
 }
 
 export const revalidate = 60

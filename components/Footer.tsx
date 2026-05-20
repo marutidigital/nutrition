@@ -6,9 +6,9 @@ import { useLanguageStore } from '@/store/useLanguageStore'
 import { translations } from '@/lib/i18n/translations'
 
 const socials = [
-  { label: 'fb', name: 'Facebook', href: 'https://www.facebook.com/p/NutriFit-100069395283617/' },
-  { label: 'ig', name: 'Instagram', href: 'https://www.instagram.com/nutrifitness.ch/' },
-  { label: 'wa', name: 'WhatsApp', href: 'https://wa.me/41792503564?text=Je%20suis%20int%C3%A9ress%C3%A9(e)%20%C3%A0%20en%20savoir%20plus%20sur%20vos%20produits' },
+  { label: 'fb', name: 'Facebook', href: 'https://www.facebook.com/' },
+  { label: 'ig', name: 'Instagram', href: 'https://www.instagram.com/' },
+  { label: 'wa', name: 'WhatsApp', href: 'https://wa.me/' },
 ]
 
 const trustIcons = ['🚚', '↩', '🛡', '💬']
@@ -99,9 +99,9 @@ export function Footer() {
 
           {/* Logo */}
           <div className="flex items-center gap-2 mb-4">
-            <div className="bg-primary text-white px-2 py-1 font-display text-xl leading-none">NF</div>
+            <div className="bg-primary text-white px-2 py-1 font-display text-xl leading-none">N</div>
             <div className="font-display text-lg text-dark leading-none">
-              NUTRI<span className="text-primary">FITNESS</span>
+              NUTRI<span className="text-primary">TION</span>
             </div>
           </div>
 
@@ -142,7 +142,7 @@ export function Footer() {
           </div>
 
           <p className="text-xs text-gray-400">
-            © {new Date().getFullYear()} NutriFitness.ch — {t.rights}
+            © {new Date().getFullYear()} Nutrition — {t.rights}
           </p>
         </div>
       </div>

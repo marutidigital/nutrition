@@ -2,8 +2,8 @@ import { Metadata } from 'next'
 import { Package, Lock, Mail } from 'lucide-react'
 
 export const metadata: Metadata = {
-  title: 'Politique de Retour | NutriFitness.ch',
-  description: 'Informations sur les retours faciles sous 14 jours pour vos compléments alimentaires chez NutriFitness.ch.',
+  title: 'Politique de Retour | Nutrition',
+  description: 'Informations sur les retours faciles sous 14 jours pour vos compléments alimentaires chez Nutrition.',
 }
 
 export default function ReturnsPage() {
@@ -36,7 +36,7 @@ export default function ReturnsPage() {
           },
           {
             title: 'Procédure de Retour',
-            body: '1. Contactez obligatoirement notre équipe par email à info@nutrifitness.ch en indiquant votre numéro de commande.\n2. Préparez votre colis soigneusement avec le produit bien protégé.\n3. Renvoyez le colis à l’adresse de notre boutique :\n   NutriFitness\n   Rue des Pâquis 34\n   1201 Genève, Suisse.'
+            body: '1. Contactez obligatoirement notre équipe par email à info@nutrition.ch en indiquant votre numéro de commande.\n2. Préparez votre colis soigneusement avec le produit bien protégé.\n3. Renvoyez le colis à l’adresse de notre boutique :\n   Nutrition\n   Rue du Grand-Chêne 8\n   1003 Lausanne, Suisse.'
           },
           {
             title: 'Frais de Retour',
@@ -59,7 +59,7 @@ export default function ReturnsPage() {
         <div className="bg-[#c8102e] text-white p-8 rounded-sm text-center">
           <div className="font-bold text-lg mb-1">Une question sur un retour ?</div>
           <div className="text-sm text-red-100 mb-4">Contactez notre support et nous vous répondrons sous 24h.</div>
-          <a href="mailto:info@nutrifitness.ch" className="bg-white text-[#c8102e] font-black px-6 py-2.5 text-sm inline-block hover:bg-gray-100 transition-colors uppercase rounded-sm">
+          <a href="mailto:info@nutrition.ch" className="bg-white text-[#c8102e] font-black px-6 py-2.5 text-sm inline-block hover:bg-gray-100 transition-colors uppercase rounded-sm">
             NOUS ÉCRIRE →
           </a>
         </div>

@@ -13,7 +13,7 @@ export async function POST(req: Request) {
     // Fetch products to give Gemini context about what we sell
     const { data: products } = await supabase.from('products').select('name, description_short, price, category');
     
-    const systemInstruction = `You are a helpful AI assistant for NutriFitness, a premium Swiss fitness and nutrition store. 
+    const systemInstruction = `You are a helpful AI assistant for Nutrition, a premium Swiss fitness and nutrition store. 
 Your goal is to help users find the perfect products based on their fitness goals, dietary requirements, and questions.
 Always be polite, concise, and encourage them to achieve their best body.
 Here is the current catalog of products we sell:

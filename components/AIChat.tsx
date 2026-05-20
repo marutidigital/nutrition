@@ -67,7 +67,7 @@ export default function AIChat() {
     setStep('chat')
     setMessages([{
       role: 'assistant',
-      content: `Welcome, ${form.name}! I'm your personal NutriFitness advisor.\n\nTell me your fitness goal and I'll recommend the best supplements from our store!\n\nTry: "I want to build muscle", "Help me lose weight", "Best pre-workout", "Vitamins for energy"...`
+      content: `Welcome, ${form.name}! I'm your personal Nutrition advisor.\n\nTell me your fitness goal and I'll recommend the best supplements from our store!\n\nTry: "I want to build muscle", "Help me lose weight", "Best pre-workout", "Vitamins for energy"...`
     }])
   }
 
@@ -131,7 +131,7 @@ export default function AIChat() {
           <div className="flex items-center gap-2">
             <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
             <div>
-              <div className="font-bold text-sm">NutriFitness AI Advisor</div>
+              <div className="font-bold text-sm">Nutrition AI Advisor</div>
               <div className="text-[10px] text-gray-400">Online · Replies instantly</div>
             </div>
           </div>

@@ -89,10 +89,10 @@ export function Navbar() {
       <header className="bg-white border-b border-gray-border py-4 px-4 sticky top-0 z-50 shadow-sm">
         <div className="max-w-[1400px] mx-auto flex items-center justify-between gap-4">
           <Link href="/" className="flex items-center gap-1.5 flex-shrink-0 group">
-            <div className="text-primary font-black text-3xl tracking-tighter leading-none font-display">NF</div>
+            <div className="text-primary font-black text-3xl tracking-tighter leading-none font-display">N</div>
             <div className="border-l-2 border-primary pl-2 flex flex-col justify-center">
               <span className="font-display font-black text-xl text-dark tracking-wide leading-none">
-                NUTRI<span className="text-primary">FITNESS</span>
+                NUTRI<span className="text-primary">TION</span>
               </span>
               <span className="text-[7px] font-bold tracking-[3.5px] text-gray-400 leading-none mt-0.5 uppercase">LIVE WELL</span>
             </div>
@@ -266,7 +266,7 @@ export function Navbar() {
             {/* Dark banner */}
             <div className="mx-6 bg-[#111] text-white p-6 flex gap-6 items-center mb-4">
               <div className="flex-shrink-0">
-                <div className="text-3xl font-black leading-none">NF</div>
+                <div className="text-3xl font-black leading-none">N</div>
                 <div className="text-[9px] tracking-[2px] text-gray-400 font-bold">PRO★ACCESS</div>
                 <div className="grid grid-cols-5 gap-0.5 mt-2">
                   {Array.from({ length: 25 }).map((_, i) => (

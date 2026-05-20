@@ -3,8 +3,8 @@ import { Microscope, Star, Handshake, MapPin, Truck } from 'lucide-react'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
-  title: 'À Propos | NutriFitness.ch',
-  description: 'Découvrez l\'histoire de NutriFitness.ch — Compléments alimentaires premium et nutrition sportive à Genève et partout en Suisse depuis 2015.',
+  title: 'À Propos | Nutrition',
+  description: 'Découvrez l\'histoire de Nutrition — Compléments alimentaires premium et nutrition sportive en Suisse depuis 2015.',
 }
 
 export default function AboutPage() {
@@ -15,7 +15,7 @@ export default function AboutPage() {
         <div className="max-w-[900px] mx-auto text-center">
           <div className="text-xs font-black tracking-[4px] text-[#c8102e] uppercase mb-4">Notre Histoire</div>
           <h1 className="font-display text-5xl sm:text-6xl font-black tracking-wide mb-4">
-            À PROPOS DE <span className="text-[#c8102e]">NUTRIFITNESS</span>
+            À PROPOS DE <span className="text-[#c8102e]">NUTRITION</span>
           </h1>
           <p className="text-gray-400 text-lg max-w-xl mx-auto leading-relaxed">
             Votre boutique de confiance pour des compléments alimentaires premium et un accompagnement personnalisé en Suisse.
@@ -30,15 +30,15 @@ export default function AboutPage() {
             <div className="text-xs font-black tracking-[3px] text-[#c8102e] uppercase mb-3">Passion & Mission</div>
             <h2 className="font-display text-4xl text-dark mb-4">Une passion devenue mission</h2>
             <p className="text-gray-600 leading-relaxed mb-4">
-              Fondée en <strong>2015 à Genève par Marco</strong>, passionné de fitness et de bien-être, NutriFitness est née du désir d’offrir aux passionnés de musculation et de remise en forme des produits de qualité et des conseils avisés pour atteindre leur plein potentiel.
+              Fondée en <strong>2015 à Lausanne</strong>, Nutrition est née du désir d’offrir aux passionnés de musculation et de remise en forme des produits de qualité et des conseils avisés pour atteindre leur plein potentiel.
             </p>
             <p className="text-gray-600 leading-relaxed">
-              D’abord une boutique physique, NutriFitness est rapidement devenue une référence en Suisse, réunissant une communauté fidèle autour de valeurs fortes : performance, santé, et dépassement de soi.
+              D’abord une boutique physique, Nutrition est rapidement devenue une référence en Suisse, réunissant une communauté fidèle autour de valeurs fortes : performance, santé, et dépassement de soi.
             </p>
           </div>
           <div className="bg-gray-50 p-8 flex flex-col items-center justify-center rounded-sm border border-gray-100 text-center">
-            <span className="text-6xl font-black text-[#c8102e] leading-none font-display">NF</span>
-            <span className="text-xs font-bold text-gray-400 tracking-[4px] uppercase mt-3">Depuis 2015 à Genève</span>
+            <span className="text-6xl font-black text-[#c8102e] leading-none font-display">N</span>
+            <span className="text-xs font-bold text-gray-400 tracking-[4px] uppercase mt-3">Depuis 2015 à Lausanne</span>
             <div className="w-12 h-0.5 bg-[#c8102e] my-4" />
             <p className="text-xs text-gray-500 max-w-[200px]">Plus de 9 ans d'expertise à votre service</p>
           </div>
@@ -85,9 +85,9 @@ export default function AboutPage() {
             <div className="flex gap-4">
               <div className="text-[#c8102e]"><MapPin size={36} strokeWidth={1.5} /></div>
               <div>
-                <h3 className="font-bold text-dark mb-1">Une présence locale à Genève</h3>
+                <h3 className="font-bold text-dark mb-1">Une présence locale à Lausanne</h3>
                 <p className="text-sm text-gray-500 leading-relaxed">
-                  Notre boutique physique située au <strong>34 Rue des Pâquis à Genève</strong> est à votre disposition pour vous conseiller et vous accompagner de manière personnalisée.
+                  Notre boutique physique située au <strong>Rue du Grand-Chêne 8 à Lausanne</strong> est à votre disposition pour vous conseiller et vous accompagner de manière personnalisée.
                 </p>
               </div>
             </div>
@@ -105,7 +105,7 @@ export default function AboutPage() {
 
         {/* Why choose us */}
         <div className="text-center space-y-4">
-          <h2 className="font-display text-4xl text-dark">Pourquoi choisir NutriFitness ?</h2>
+          <h2 className="font-display text-4xl text-dark">Pourquoi choisir Nutrition ?</h2>
           <p className="text-gray-600 max-w-xl mx-auto leading-relaxed text-sm">
             Parce que nous ne nous contentons pas de vendre des compléments. Nous mettons notre expérience, notre expertise et notre écoute au service de vos objectifs. Que vous cherchiez à gagner en muscle, à perdre du gras, à augmenter votre énergie, ou simplement à améliorer votre hygiène de vie, nous sommes là pour vous accompagner.
           </p>
@@ -117,7 +117,7 @@ export default function AboutPage() {
         {/* CTA */}
         <div className="bg-[#c8102e] text-white p-10 text-center rounded-sm">
           <h2 className="font-display text-4xl font-black mb-2">PRÊT À ATTEINDRE VOS OBJECTIFS ?</h2>
-          <p className="text-red-100 text-sm mb-6">Bénéficiez de 10% de remise sur votre première commande avec le code <strong className="underline">NF10</strong> !</p>
+          <p className="text-red-100 text-sm mb-6">Bénéficiez de 10% de remise sur votre première commande avec le code <strong className="underline">N10</strong> !</p>
           <Link href="/products" className="bg-white text-[#c8102e] font-black px-8 py-3.5 text-sm tracking-widest hover:bg-gray-100 transition-colors inline-block uppercase">
             Voir tous les produits →
           </Link>

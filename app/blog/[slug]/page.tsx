@@ -16,7 +16,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const post = BLOG_POSTS.find(p => p.slug === params.slug)
   if (!post) return { title: 'Post Not Found' }
   return {
-    title: post.title + ' | NutriFitness Blog',
+    title: post.title + ' | Nutrition Blog',
     description: post.excerpt,
     openGraph: { title: post.title, description: post.excerpt, images: [post.image] }
   }
@@ -43,7 +43,7 @@ export default function BlogPostPage({ params }: PageProps) {
           <div className="flex items-center gap-4 text-xs text-gray-300 mt-3">
             <span className="flex items-center gap-1.5"><CalendarDays size={14} /> {post.date}</span>
             <span className="flex items-center gap-1.5"><Clock size={14} /> {post.readTime} read</span>
-            <span className="flex items-center gap-1.5"><PenTool size={14} /> NutriFitness Team</span>
+            <span className="flex items-center gap-1.5"><PenTool size={14} /> Nutrition Team</span>
           </div>
         </div>
       </div>

@@ -104,7 +104,7 @@ export function ProductDetailClient({ product, discount, images, relatedProducts
           )}
           {product.is_featured && (
             <span className="bg-dark text-white text-[11px] font-bold px-3 py-1.5 tracking-wide">
-              {isMounted ? t.productDetail.exclusive : 'NutriFitness Exclusive'}
+              {isMounted ? t.productDetail.exclusive : 'Nutrition Exclusive'}
             </span>
           )}
         </div>

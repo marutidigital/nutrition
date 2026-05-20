@@ -22,18 +22,18 @@ const dmSans = DM_Sans({
 
 export const metadata: Metadata = {
   title: {
-    default: 'NutriFitness.ch — Premium Swiss Supplements',
-    template: '%s | NutriFitness.ch',
+    default: 'Nutrition — Premium Swiss Supplements',
+    template: '%s | Nutrition',
   },
   description:
     'Premium Swiss nutrition and fitness supplements. Keto, protein, pre-workout and more. Free shipping over CHF 75.',
   keywords: ['supplements', 'protein', 'keto', 'fitness', 'switzerland', 'nutrition'],
   openGraph: {
-    title: 'NutriFitness.ch — Premium Swiss Supplements',
+    title: 'Nutrition — Premium Swiss Supplements',
     description:
       'Premium Swiss nutrition and fitness supplements. Keto, protein, pre-workout and more.',
-    url: 'https://nutrifitness.ch',
-    siteName: 'NutriFitness',
+    url: 'https://nutrition.ch',
+    siteName: 'Nutrition',
     locale: 'en_CH',
     type: 'website',
   },

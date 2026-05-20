@@ -2,8 +2,8 @@ import { Metadata } from 'next'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
-  title: 'Track Order | NutriFitness.ch',
-  description: 'Track your NutriFitness order.',
+  title: 'Track Order | Nutrition',
+  description: 'Track your Nutrition order.',
 }
 
 export default function TrackOrderPage() {
@@ -24,7 +24,7 @@ export default function TrackOrderPage() {
               <label className="text-[11px] font-bold text-gray-600 uppercase tracking-wider block mb-1">Order Number</label>
               <input
                 type="text"
-                placeholder="e.g. NF-12345"
+                placeholder="e.g. N-12345"
                 className="w-full border border-gray-300 px-4 py-3 text-sm focus:outline-none focus:border-[#c8102e] rounded-sm"
               />
             </div>

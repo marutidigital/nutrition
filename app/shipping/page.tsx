@@ -1,7 +1,7 @@
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Livraison & Expédition | NutriFitness.ch',
+  title: 'Livraison & Expédition | Nutrition',
   description: 'Informations de livraison rapides pour la Suisse. Expédition sous 24/48h et livraison offerte dès CHF 75.',
 }
 
@@ -56,7 +56,7 @@ export default function ShippingPage() {
         <div className="bg-gray-50 border border-gray-100 p-6 rounded-sm space-y-2">
           <h2 className="font-bold text-dark mb-2">Informations Importantes</h2>
           <ul className="space-y-2 text-xs sm:text-sm text-gray-600">
-            <li>• Toutes nos commandes sont emballées avec soin et expédiées directement depuis notre boutique à Genève.</li>
+            <li>• Toutes nos commandes sont emballées avec soin et expédiées directement depuis notre boutique en Suisse.</li>
             <li>• Dès l’expédition de votre commande, vous recevrez automatiquement un numéro de suivi par e-mail.</li>
             <li>• Si votre commande n’a pas encore été expédiée, vous pouvez nous contacter pour une modification ou une annulation. Une fois remise au transporteur, aucune modification n’est possible.</li>
             <li>• En cas d’absence lors de la livraison, votre colis sera déposé dans votre boîte aux lettres ou à l’office de poste le plus proche.</li>

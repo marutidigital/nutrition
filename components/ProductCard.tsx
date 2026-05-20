@@ -152,7 +152,7 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
       <div className="p-4 flex flex-col gap-1.5 bg-gradient-to-b from-white to-gray-50">
         <div className="flex items-center justify-between">
           <span className="text-[9px] font-bold tracking-widest text-gray-400 uppercase truncate pr-2">
-            {product.brand || 'NUTRIFITNESS'}
+            {product.brand || 'NUTRITION'}
           </span>
           <div className="flex items-center gap-1 opacity-80 group-hover:opacity-100 transition-opacity">
             <StarRating rating={product.rating || 5} />

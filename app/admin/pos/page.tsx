@@ -317,7 +317,7 @@ export default function POSPage() {
             {/* Printable Area */}
             <div className="p-8 overflow-y-auto" id="printable-invoice">
               <div className="text-center mb-6 border-b border-gray-200 pb-6">
-                <h1 className="font-display text-2xl font-bold tracking-wider">NUTRIFITNESS</h1>
+                <h1 className="font-display text-2xl font-bold tracking-wider">NUTRITION</h1>
                 <p className="text-gray-500 text-sm mt-1">GmbH Switzerland</p>
                 <div className="mt-4 text-sm space-y-1 text-gray-600">
                   <p>Order: {invoiceData.order_number}</p>
@@ -366,8 +366,8 @@ export default function POSPage() {
               </div>
 
               <div className="mt-8 text-center text-sm text-gray-500 border-t border-gray-200 pt-6">
-                <p>Thank you for shopping with NutriFitness!</p>
-                <p className="mt-1">nutrifitness.ch</p>
+                <p>Thank you for shopping with Nutrition!</p>
+                <p className="mt-1">nutrition.ch</p>
               </div>
             </div>
 

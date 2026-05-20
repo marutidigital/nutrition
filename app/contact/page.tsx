@@ -2,8 +2,8 @@ import { Metadata } from 'next'
 import { MapPin, Phone, Mail, Clock } from 'lucide-react'
 
 export const metadata: Metadata = {
-  title: 'Contactez-nous | NutriFitness.ch',
-  description: 'Une question sur un produit, besoin de conseils personnalisés ou un suivi de commande ? L\'équipe NutriFitness à Genève est à votre écoute.',
+  title: 'Contactez-nous | Nutrition',
+  description: 'Une question sur un produit, besoin de conseils personnalisés ou un suivi de commande ? L\'équipe Nutrition est à votre écoute.',
 }
 
 export default function ContactPage() {
@@ -11,7 +11,7 @@ export default function ContactPage() {
     <div className="bg-white min-h-screen">
       <div className="bg-[#111] text-white py-14 px-4 text-center">
         <h1 className="font-display text-5xl font-black tracking-wide">CONTACTEZ-<span className="text-[#c8102e]">NOUS</span></h1>
-        <p className="text-gray-400 mt-2">Une question, besoin de conseils personnalisés ? L’équipe NutriFitness est à votre écoute !</p>
+        <p className="text-gray-400 mt-2">Une question, besoin de conseils personnalisés ? L’équipe Nutrition est à votre écoute !</p>
       </div>
 
       <div className="max-w-[1000px] mx-auto px-4 py-12 grid grid-cols-1 md:grid-cols-2 gap-12">
@@ -21,9 +21,9 @@ export default function ContactPage() {
             <div className="text-xs font-black tracking-widest text-[#c8102e] uppercase mb-4">Nos Coordonnées</div>
             <div className="space-y-5">
               {[
-                { icon: <MapPin size={24} />, label: 'Notre boutique physique', value: '34 Rue des Pâquis, 1201 Genève, Suisse' },
-                { icon: <Phone size={24} />, label: 'Par téléphone', value: '+41 79 250 35 64', sub: 'Durant les horaires d’ouverture.' },
-                { icon: <Mail size={24} />, label: 'Par email', value: 'info@nutrifitness.ch', sub: 'Nous répondons sous 24 à 48h.' },
+                { icon: <MapPin size={24} />, label: 'Notre boutique physique', value: 'Rue du Grand-Chêne 8, 1003 Lausanne, Suisse' },
+                { icon: <Phone size={24} />, label: 'Par téléphone', value: '+41 21 000 00 00', sub: 'Durant les horaires d’ouverture.' },
+                { icon: <Mail size={24} />, label: 'Par email', value: 'info@nutrition.ch', sub: 'Nous répondons sous 24 à 48h.' },
                 {
                   icon: <Clock size={24} />,
                   label: 'Horaires d’ouverture',
@@ -49,9 +49,9 @@ export default function ContactPage() {
             <p className="text-xs text-gray-500 mb-3">Retrouvez nos conseils, nouveautés et promos sur :</p>
             <div className="flex gap-3 flex-wrap">
               {[
-                { name: 'Instagram', url: 'https://www.instagram.com/nutrifitness.ch/' },
-                { name: 'Facebook', url: 'https://www.facebook.com/p/NutriFit-100069395283617/' },
-                { name: 'WhatsApp', url: 'https://wa.me/41792503564?text=Je%20suis%20intéressé(e)%20à%20en%20savoir%20plus%20sur%20vos%20produits' }
+                { name: 'Instagram', url: 'https://www.instagram.com/' },
+                { name: 'Facebook', url: 'https://www.facebook.com/' },
+                { name: 'WhatsApp', url: 'https://wa.me/' }
               ].map(s => (
                 <a
                   key={s.name}
@@ -109,10 +109,10 @@ export default function ContactPage() {
       <div className="h-80 bg-gray-100 flex items-center justify-center border-t border-gray-200">
         <div className="text-center p-4">
           <div className="text-3xl mb-2">🗺️</div>
-          <div className="font-bold text-dark mb-1">Retrouvez-nous à Genève</div>
-          <p className="text-xs text-gray-500">34 Rue des Pâquis, 1201 Genève</p>
+          <div className="font-bold text-dark mb-1">Retrouvez-nous à Lausanne</div>
+          <p className="text-xs text-gray-500">Rue du Grand-Chêne 8, 1003 Lausanne</p>
           <a
-            href="https://maps.google.com/?q=34+Rue+des+Pâquis,+1201+Genève"
+            href="https://maps.google.com/?q=Rue+du+Grand-Chêne+8,+1003+Lausanne"
             target="_blank"
             rel="noopener noreferrer"
             className="text-xs font-bold text-[#c8102e] underline mt-2 block"

@@ -71,7 +71,7 @@ export const translations = {
       sale: 'Promo',
     },
     productDetail: {
-      exclusive: 'Exclusivité NutriFitness',
+      exclusive: 'Exclusivité Nutrition',
       freeShipping: 'Livraison gratuite',
       freeShippingSub: 'Dès CHF 75 d\'achat',
       returns: 'Retours sous 14 jours',
@@ -154,7 +154,7 @@ export const translations = {
       support: 'Support 24/7',
       supportDesc: 'Service client à votre écoute',
       membership: 'Adhésion Exclusive',
-      membershipTitle: 'NUTRIFIT',
+      membershipTitle: 'NUTRITION',
       membershipHighlight: 'ACCÈS PRO',
       membershipDesc: 'Offres BOGO · Cashback · Livraison gratuite & plus',
       membershipCta: 'ACCÉDER AU PRO — CHF 39.99',
@@ -169,7 +169,7 @@ export const translations = {
       ],
     },
     footer: {
-      about: 'NutriFitness.ch est votre destination de confiance pour les compléments de qualité premium en Suisse.',
+      about: 'Nutrition est votre destination de confiance pour les compléments de qualité premium en Suisse.',
       links: 'Liens Rapides',
       contact: 'Nous Contacter',
       rights: 'Tous droits réservés.',
@@ -185,7 +185,7 @@ export const translations = {
         { title: 'Livraison Gratuite', sub: 'Dès CHF 75 d\'achat' },
         { title: 'Retours sous 14 jours', sub: 'Produits non ouverts' },
         { title: 'Qualité Suisse', sub: 'Certifiée & premium' },
-        { title: 'Support Expert', sub: '+41 79 250 35 64' },
+        { title: 'Support Expert', sub: '+41 21 000 00 00' },
       ],
       columns: [
         {
@@ -286,7 +286,7 @@ export const translations = {
     },
     contact: {
       title: 'Contactez-nous',
-      subtitle: 'Une question, besoin de conseils personnalisés ? L\'équipe NutriFitness est à votre écoute !',
+      subtitle: 'Une question, besoin de conseils personnalisés ? L\'équipe Nutrition est à votre écoute !',
       ourCoords: 'Nos Coordonnées',
       storeLabel: 'Notre boutique physique',
       phoneLabel: 'Par téléphone',
@@ -410,7 +410,7 @@ export const translations = {
       sale: 'Sale',
     },
     productDetail: {
-      exclusive: 'NutriFitness Exclusive',
+      exclusive: 'Nutrition Exclusive',
       freeShipping: 'Free Shipping',
       freeShippingSub: 'On orders over CHF 75',
       returns: '14-Day Returns',
@@ -493,7 +493,7 @@ export const translations = {
       support: '24/7 Support',
       supportDesc: 'Customer service at your disposal',
       membership: 'Exclusive Membership',
-      membershipTitle: 'NUTRIFIT',
+      membershipTitle: 'NUTRITION',
       membershipHighlight: 'PRO ACCESS',
       membershipDesc: 'BOGO deals · Cash back rewards · Free shipping & more',
       membershipCta: 'ADD PRO ACCESS — CHF 39.99',
@@ -508,7 +508,7 @@ export const translations = {
       ],
     },
     footer: {
-      about: 'NutriFitness.ch is your trusted destination for premium quality supplements in Switzerland.',
+      about: 'Nutrition is your trusted destination for premium quality supplements in Switzerland.',
       links: 'Quick Links',
       contact: 'Contact Us',
       rights: 'All rights reserved.',
@@ -524,7 +524,7 @@ export const translations = {
         { title: 'Free Shipping', sub: 'Orders over CHF 75' },
         { title: '14-Day Returns', sub: 'Unopened products' },
         { title: 'Swiss Quality', sub: 'Certified & premium' },
-        { title: 'Expert Support', sub: '+41 79 250 35 64' },
+        { title: 'Expert Support', sub: '+41 21 000 00 00' },
       ],
       columns: [
         {
@@ -625,7 +625,7 @@ export const translations = {
     },
     contact: {
       title: 'Contact Us',
-      subtitle: 'A question or need personalized advice? The NutriFitness team is here for you!',
+      subtitle: 'A question or need personalized advice? The Nutrition team is here for you!',
       ourCoords: 'Our Contact Details',
       storeLabel: 'Our Physical Store',
       phoneLabel: 'By Phone',

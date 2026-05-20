@@ -4,7 +4,7 @@ import { HomePageUI } from '@/components/HomePageUI'
 import type { Product } from '@/lib/types'
 
 export const metadata: Metadata = {
-  title: 'NutriFitness.ch — Compléments Suisses Premium',
+  title: 'Nutrition — Compléments Suisses Premium',
   description:
     'Votre destination de confiance pour les compléments alimentaires premium en Suisse. Protéines, pré-workout, créatine et plus. Livraison gratuite dès CHF 75.',
 }

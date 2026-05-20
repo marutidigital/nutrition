@@ -2,7 +2,7 @@ import { Metadata } from 'next'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
-  title: 'FAQ - Foire Aux Questions | NutriFitness.ch',
+  title: 'FAQ - Foire Aux Questions | Nutrition',
   description: 'Retrouvez toutes les réponses aux questions les plus fréquentes sur nos produits, commandes, livraisons, paiements et compte client.',
 }
 
@@ -47,7 +47,7 @@ export default function FAQPage() {
       questions: [
         {
           q: 'Livrez-vous dans toute la Suisse ?',
-          a: 'Oui, nous livrons absolument partout en Suisse via La Poste, directement depuis notre boutique à Genève.'
+          a: 'Oui, nous livrons absolument partout en Suisse via La Poste, directement depuis notre boutique en Suisse.'
         },
         {
           q: 'Quels sont les délais de livraison ?',
@@ -87,7 +87,7 @@ export default function FAQPage() {
 
       <div className="max-w-[800px] mx-auto px-4 py-12 space-y-12">
         <p className="text-gray-600 text-sm leading-relaxed text-center">
-          Chez NutriFitness, nous tenons à vous offrir une expérience simple, claire et sans stress. 
+          Chez Nutrition, nous tenons à vous offrir une expérience simple, claire et sans stress. 
           Prenez un moment pour parcourir cette page : la réponse à votre question s’y trouve probablement déjà. 
           Et si ce n’est pas le cas, notre équipe se fera un plaisir de vous aider via notre{' '}
           <Link href="/contact" className="text-[#c8102e] font-bold hover:underline">page de contact</Link>.
@@ -123,8 +123,8 @@ export default function FAQPage() {
             <Link href="/contact" className="bg-[#c8102e] text-white font-black px-6 py-3 text-xs tracking-widest hover:bg-[#a50d28] transition-colors uppercase">
               NOUS CONTACTER
             </Link>
-            <a href="tel:+41792503564" className="bg-white/10 text-white font-black px-6 py-3 text-xs tracking-widest hover:bg-white/20 transition-colors uppercase">
-              +41 79 250 35 64
+            <a href="tel:+41210000000" className="bg-white/10 text-white font-black px-6 py-3 text-xs tracking-widest hover:bg-white/20 transition-colors uppercase">
+              +41 21 000 00 00
             </a>
           </div>
         </div>

@@ -3,8 +3,8 @@ import Link from 'next/link'
 import { Dumbbell, Zap, Scale, Leaf, Activity, Flame, Salad, Brain, BookOpen, CalendarDays, Clock } from 'lucide-react'
 
 export const metadata: Metadata = {
-  title: 'Blog — NutriFitness.ch',
-  description: 'Expert articles on nutrition, supplements, training and fitness from the NutriFitness team.',
+  title: 'Blog — Nutrition',
+  description: 'Expert articles on nutrition, supplements, training and fitness from the Nutrition team.',
 }
 
 const CATEGORIES = [
@@ -308,7 +308,7 @@ export default function BlogPage({ searchParams }: PageProps) {
       <div className="bg-[#111] text-white py-12 px-4">
         <div className="max-w-[1200px] mx-auto">
           <div className="text-xs font-bold tracking-[4px] text-gray-400 uppercase mb-3">Knowledge Hub</div>
-          <h1 className="font-display text-5xl sm:text-6xl font-black tracking-wide">THE NUTRIFIT <span className="text-[#c8102e]">BLOG</span></h1>
+          <h1 className="font-display text-5xl sm:text-6xl font-black tracking-wide">THE NUTRITION <span className="text-[#c8102e]">BLOG</span></h1>
           <p className="text-gray-400 mt-3 text-sm max-w-xl">Expert articles on supplements, training, and nutrition — backed by science, written for athletes.</p>
         </div>
       </div>
