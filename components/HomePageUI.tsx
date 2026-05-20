@@ -39,6 +39,9 @@ export function HomePageUI({ featured, newProducts }: HomePageUIProps) {
 
   const t = isMounted ? translations[language] : translations.fr
 
+  const availableFeatured = featured.filter((p) => p.in_stock)
+  const availableNew = newProducts.filter((p) => p.in_stock)
+
   const HARDCODED_CATEGORIES = [
     { id: '1',  slug: 'Proteins',                  name: { fr: 'Protéines',        en: 'Proteins' } },
     { id: '2',  slug: 'Pre Workout',               name: { fr: 'Pré-Workout',      en: 'Pre Workout' } },
@@ -81,7 +84,7 @@ export function HomePageUI({ featured, newProducts }: HomePageUIProps) {
       <HeroSlider />
 
       {/* ── Featured Products ── */}
-      {featured.length > 0 && (
+      {availableFeatured.length > 0 && (
         <section className="bg-white py-12 px-4">
           <div className="max-w-[1400px] mx-auto">
             <div className="flex items-end justify-between mb-8">
@@ -102,7 +105,7 @@ export function HomePageUI({ featured, newProducts }: HomePageUIProps) {
               </Link>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-              {featured.map((product, i) => (
+              {availableFeatured.map((product, i) => (
                 <ProductCard key={product.id} product={product} priority={i < 5} />
               ))}
             </div>
@@ -170,7 +173,7 @@ export function HomePageUI({ featured, newProducts }: HomePageUIProps) {
       </section>
 
       {/* ── New Arrivals ── */}
-      {newProducts.length > 0 && (
+      {availableNew.length > 0 && (
         <section className="py-12 px-4">
           <div className="max-w-[1400px] mx-auto">
             <div className="flex items-end justify-between mb-8">
@@ -187,7 +190,7 @@ export function HomePageUI({ featured, newProducts }: HomePageUIProps) {
               </Link>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-              {newProducts.map((product) => (
+              {availableNew.map((product) => (
                 <ProductCard key={product.id} product={product} />
               ))}
             </div>
