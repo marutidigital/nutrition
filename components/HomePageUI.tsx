@@ -138,8 +138,8 @@ export function HomePageUI({ featured, newProducts, showcase }: HomePageUIProps)
       {/* ── Hero Banner ── */}
       <HeroSlider />
 
-      {/* ── Featured Products ── */}
-      {availableFeatured.length > 0 && (
+      {/* ── Featured Products + Media Showcase (interspersed) ── */}
+      {(availableFeatured.length > 0 || activeShowcase.length > 0) && (
         <section className="bg-white py-12 px-4">
           <div className="max-w-[1400px] mx-auto">
             <div className="flex items-end justify-between mb-8">
@@ -160,72 +160,75 @@ export function HomePageUI({ featured, newProducts, showcase }: HomePageUIProps)
               </Link>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-              {availableFeatured.map((product, i) => (
-                <ProductCard key={product.id} product={product} priority={i < 5} />
-              ))}
+              {(() => {
+                // Build a merged list: insert each showcase item at a random slot among products
+                type GridItem =
+                  | { kind: 'product'; product: (typeof availableFeatured)[0]; idx: number }
+                  | { kind: 'media'; item: (typeof activeShowcase)[0] }
+
+                const items: GridItem[] = availableFeatured.map((p, idx) => ({
+                  kind: 'product',
+                  product: p,
+                  idx,
+                }))
+
+                // Deterministic spread: insert showcase every ~3 products
+                const step = Math.max(3, Math.floor(items.length / (activeShowcase.length || 1)))
+                activeShowcase.forEach((item, si) => {
+                  const pos = Math.min(step * (si + 1), items.length)
+                  items.splice(pos + si, 0, { kind: 'media', item })
+                })
+
+                return items.map((entry) => {
+                  if (entry.kind === 'product') {
+                    return (
+                      <ProductCard
+                        key={entry.product.id}
+                        product={entry.product}
+                        priority={entry.idx < 5}
+                      />
+                    )
+                  }
+                  const { item } = entry
+                  const isVideo =
+                    item.media_type === 'video' || !!item.media_url.match(/\.(mp4|webm|ogg)/i)
+                  return (
+                    <Link
+                      key={`showcase-${item.id}`}
+                      href={`/products?category=${encodeURIComponent(item.category_slug)}`}
+                      className="group relative overflow-hidden rounded-xl border border-gray-border/60 shadow-sm hover:shadow-glow-hover hover:-translate-y-1 transition-all duration-300 aspect-[4/5] bg-gray-100"
+                    >
+                      {isVideo ? (
+                        <video
+                          src={item.media_url}
+                          autoPlay
+                          loop
+                          muted
+                          playsInline
+                          className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                        />
+                      ) : (
+                        <img
+                          src={item.media_url}
+                          alt={item.title}
+                          className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                        />
+                      )}
+                      {/* Minimal bottom label — no overlay */}
+                      <div className="absolute bottom-0 left-0 right-0 px-3 py-2 bg-white/80 backdrop-blur-sm flex items-center justify-between">
+                        <span className="text-[11px] font-black tracking-widest text-dark uppercase truncate">
+                          {item.title}
+                        </span>
+                        <span className="text-[#c8102e] text-xs font-bold ml-1 shrink-0">→</span>
+                      </div>
+                    </Link>
+                  )
+                })
+              })()}
             </div>
           </div>
         </section>
       )}
-
-      {/* ── Category Video Showcase ── */}
-      <section className="bg-white py-16 px-4 border-b border-gray-100">
-        <div className="max-w-[1400px] mx-auto">
-          <div className="text-center mb-10">
-            <div className="text-xs font-bold tracking-[3px] text-gray-400 uppercase mb-2">
-              {t.home.shopByCategory || 'EXPLORE OUR LINE'}
-            </div>
-            <h2 className="font-display font-black text-4xl sm:text-5xl text-[#c8102e] tracking-wide uppercase">
-              {language === 'fr' ? 'CATÉGORIES PREMIUM' : 'PREMIUM CATEGORIES'}
-            </h2>
-            <div className="w-16 h-1 bg-[#c8102e] mx-auto mt-3" />
-          </div>
-          
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
-            {activeShowcase.map((item) => {
-              const isVideo = item.media_type === 'video' || item.media_url.match(/\.(mp4|webm|ogg)/i)
-              return (
-                <Link
-                  key={item.id}
-                  href={`/products?category=${encodeURIComponent(item.category_slug)}`}
-                  className="group relative h-[360px] w-full overflow-hidden rounded-sm shadow-sm hover:shadow-xl transition-all duration-500 bg-black flex flex-col justify-end p-6 border border-gray-900"
-                >
-                  {/* Media background */}
-                  {isVideo ? (
-                    <video
-                      src={item.media_url}
-                      autoPlay
-                      loop
-                      muted
-                      playsInline
-                      className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:opacity-85 group-hover:scale-105 transition-all duration-700"
-                    />
-                  ) : (
-                    <img
-                      src={item.media_url}
-                      alt={item.title}
-                      className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:opacity-85 group-hover:scale-105 transition-all duration-700"
-                    />
-                  )}
-                  
-                  {/* Premium overlay gradient */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent opacity-80 group-hover:opacity-70 transition-opacity duration-500" />
-                  
-                  {/* Text contents */}
-                  <div className="relative z-10 w-full flex flex-col items-center text-center">
-                    <h3 className="font-display font-black text-2xl text-white uppercase tracking-wider leading-none mb-1 group-hover:text-primary transition-colors">
-                      {item.title}
-                    </h3>
-                    <span className="text-gray-400 text-[10px] font-bold tracking-[2px] uppercase opacity-75 group-hover:opacity-100 transition-opacity">
-                      {language === 'fr' ? 'DÉCOUVRIR' : 'EXPLORE'} →
-                    </span>
-                  </div>
-                </Link>
-              )
-            })}
-          </div>
-        </div>
-      </section>
 
       {/* ── PRO Membership Banner ── */}
       <section className="bg-[#111] py-12 px-4">
